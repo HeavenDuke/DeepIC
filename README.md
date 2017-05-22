@@ -8,7 +8,7 @@ Course Project for Machine Learning, Tsinghua University
 
 ### Approaches
 
-* **Model: ** Enhanced Convolution Neural Network
+**Model: **Enhanced Convolution Neural Network
 
 We will try to use the following technique to enhance our model.
 
