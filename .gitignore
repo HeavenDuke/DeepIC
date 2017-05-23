@@ -90,3 +90,6 @@ ENV/
 
 # IntelliJ Configuration directory
 .idea
+
+# Data Directory
+data
