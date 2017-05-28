@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import random
 
 # TODO: SIFT ALGORITHM - Linrong Jin
 
@@ -19,7 +20,6 @@ def rotateImage(image, angle):
 
 
 # flag = 0 / 1 / -1
-# 旋转: 垂直/ 水平 / 水平与垂直
 def flipImage(image, flag):
     return cv2.flip(image, flag)
 
@@ -39,15 +39,23 @@ def shift(image, x, y):
     return cv2.warpAffine(image, M, (cols,rows))
 
 
-# 对比度变换
 def contrast(image, alpha, beta):
     image = image * alpha + beta
     return image
 
-# size - 噪点数量
+
 def noise(image, size):
-    for i in range(0,size):
+    for i in range(0, size):
         xi = int(np.random.uniform(0,image.shape[1]))
         xj = int(np.random.uniform(0,image.shape[0]))
         image[xj,xi] = 255
     return image
+
+
+def shuffle(image, label):
+    _images, _labels = image.tolist(), label.tolist()
+    table = []
+    for i in range(len(_images)):
+        table.append([_images[i], _labels[i]])
+    random.shuffle(table)
+    return np.asarray([item[0] for item in table]), np.asarray([item[1] for item in table])
