@@ -76,7 +76,7 @@ def EnhancedResSppNet(class_num, enhanced_class_num):
     model = identity_block(model, 3, [512, 512, 2048], stage = 5, block = 'b')
     model = identity_block(model, 3, [512, 512, 2048], stage = 5, block = 'c')
 
-    model = AveragePooling2D((7, 7))(model)
+    # model = AveragePooling2D((7, 7))(model)
 
     # model = SpatialPyramidPooling([1, 2, 4])(model)
 
