@@ -4,10 +4,9 @@ import random
 
 # TODO: SIFT ALGORITHM - Linrong Jin
 def imageSIFT(img):
-    gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
     #s = cv2.SIFT() # 调用SIFT
     s = cv2.SURF() # 调用SURF,SURF是SIFT算法的高效变种
-    keypoints = s.detect(im) # 提取关键点
+    keypoints = s.detect(img) # 提取关键点
     return keypoints
 
 # TODO: SaliencyELD Call - Linrong Jin
@@ -64,4 +63,4 @@ def shuffle(image, label):
     for i in range(len(_images)):
         table.append([_images[i], _labels[i]])
     random.shuffle(table)
-    return np.asarray([item[0] for item in table]), np.asarray([item[1] for item in table]) 
+    return np.asarray([item[0] for item in table]), np.asarray([item[1] for item in table])
