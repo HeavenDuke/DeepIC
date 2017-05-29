@@ -15,7 +15,7 @@ def construct_input_data(path, with_label = True):
                    image_ids]
 
     if with_label:
-        label_file = open(path + '/train.label', 'r')
+        label_file = open(path + '/label.label', 'r')
         lines = label_file.readlines()
         labels_map = {}
         for line in lines:
