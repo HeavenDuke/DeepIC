@@ -20,8 +20,6 @@ x_test, y_test = x[int(x.shape[0] * validation_split):], y[int(x.shape[0] * vali
 y_train_p = to_categorical(y_train_p, 10)
 y_test_p = to_categorical(y_test_p, 10)
 
-print x_train_p.shape
-
 x_train_p = x_train_p.astype('float32')
 x_test_p = x_test_p.astype('float32')
 x_train_p /= 255.
