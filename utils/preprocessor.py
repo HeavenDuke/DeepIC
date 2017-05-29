@@ -5,13 +5,11 @@ from sklearn.cluster import k_means
 from sklearn.preprocessing import normalize
 
 # TODO: SIFT ALGORITHM - Linrong Jin
-def imageSIFT(img, n_clusters = 200):
+def imageSIFT(img, n_clusters = 100):
     s = cv2.SIFT()
     keypoints, descriptors = s.detectAndCompute(img, None)
     descriptors = normalize(descriptors, norm = 'l2', axis = 1)
-    return k_means(descriptors, n_clusters = n_clusters)
-
-print imageSIFT(cv2.imread('../data/image/1.jpg'))
+    return np.reshape(k_means(descriptors, n_clusters = n_clusters), newshape = (1, n_clusters * 128))
 
 # TODO: SaliencyELD Call - Linrong Jin
 
