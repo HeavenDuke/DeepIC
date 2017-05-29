@@ -4,9 +4,8 @@ import random
 
 # TODO: SIFT ALGORITHM - Linrong Jin
 def imageSIFT(img):
-    #s = cv2.SIFT() # 调用SIFT
-    s = cv2.SURF() # 调用SURF,SURF是SIFT算法的高效变种
-    keypoints = s.detect(img) # 提取关键点
+    s = cv2.SURF()
+    keypoints = s.detect(img)
     return keypoints
 
 # TODO: SaliencyELD Call - Linrong Jin
