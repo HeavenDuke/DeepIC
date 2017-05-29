@@ -51,8 +51,8 @@ def EnhancedResSppNet(class_num, enhanced_class_num):
     _input = Input(shape = (64, 64, 3))
     model = _input
     model = ZeroPadding2D((3, 3))(model)
-    model = Conv2D(64, (7, 7), strides = (2, 2), name = 'conv1')(model)
-    model = BatchNormalization(axis = 3, name = 'bn_conv1')(model)
+    model = Conv2D(64, (7, 7), strides = (2, 2))(model)
+    model = BatchNormalization(axis = 3)(model)
     model = Activation('relu')(model)
     model = MaxPooling2D((3, 3), strides = (2, 2))(model)
 
@@ -76,7 +76,7 @@ def EnhancedResSppNet(class_num, enhanced_class_num):
     model = identity_block(model, 3, [512, 512, 2048], stage = 5, block = 'b')
     model = identity_block(model, 3, [512, 512, 2048], stage = 5, block = 'c')
 
-    model = MaxPooling2D((7, 7))(model)
+    model = AveragePooling2D((7, 7))(model)
 
     # model = SpatialPyramidPooling([1, 2, 4])(model)
 
