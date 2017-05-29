@@ -1,5 +1,5 @@
 from keras.models import Model
-from keras.layers import Dense, ZeroPadding2D, AveragePooling2D, BatchNormalization, Conv2D, MaxPooling2D, Activation, Input
+from keras.layers import Dense, ZeroPadding2D, AveragePooling2D, BatchNormalization, Conv2D, MaxPooling2D, Activation, Flatten, Input
 from keras.optimizers import RMSprop
 from layers.SpatialPyramidPooling import SpatialPyramidPooling
 from keras.applications.resnet50 import identity_block, conv_block
@@ -48,7 +48,7 @@ def ResSppNet(class_number):
 
 
 def EnhancedResSppNet(class_num, enhanced_class_num):
-    _input = Input(shape = (None, None, 3))
+    _input = Input(shape = (64, 64, 3))
     model = _input
     model = ZeroPadding2D((3, 3))(model)
     model = Conv2D(64, (7, 7), strides = (2, 2), name = 'conv1')(model)
@@ -76,9 +76,11 @@ def EnhancedResSppNet(class_num, enhanced_class_num):
     model = identity_block(model, 3, [512, 512, 2048], stage = 5, block = 'b')
     model = identity_block(model, 3, [512, 512, 2048], stage = 5, block = 'c')
 
-    model = AveragePooling2D((7, 7))(model)
+    model = MaxPooling2D((7, 7))(model)
 
-    model = SpatialPyramidPooling([1, 2, 4])(model)
+    # model = SpatialPyramidPooling([1, 2, 4])(model)
+
+    model = Flatten()(model)
 
     model1 = Dense(units = class_num)(model)
     model1 = Activation(activation = "softmax")(model1)
