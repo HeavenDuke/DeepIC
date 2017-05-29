@@ -43,11 +43,11 @@ def ResSppNet(class_number):
 
     model = Model(_input, model)
 
-    model.compile(loss = "categorical_crossentropy", optimizer = Adam(lr = 0.0001), metrics = ['accuracy'])
+    model.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 1e-4, decay = 1e-6), metrics = ['accuracy'])
     return model
 
 
-def EnhancedResSppNet(class_number, enhanced_class_number):
+def EnhancedResSppNet(class_num, enhanced_class_num):
     _input = Input(shape = (None, None, 3))
     model = _input
     model = ZeroPadding2D((3, 3))(model)
@@ -80,12 +80,12 @@ def EnhancedResSppNet(class_number, enhanced_class_number):
 
     model = SpatialPyramidPooling([1, 2, 4])(model)
 
-    model1 = Dense(units = class_number)(model)
+    model1 = Dense(units = class_num)(model)
     model1 = Activation(activation = "softmax")(model1)
     model1 = Model(_input, model1)
     model1.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 1e-4, decay = 1e-6), metrics = ['accuracy'])
 
-    model2 = Dense(units = enhanced_class_number)(model)
+    model2 = Dense(units = enhanced_class_num)(model)
     model2 = Activation(activation = "softmax")(model2)
     model2 = Model(_input, model2)
     model2.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 1e-4, decay = 1e-6), metrics = ['accuracy'])

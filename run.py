@@ -4,6 +4,7 @@ from keras.utils.np_utils import to_categorical
 from utils.preprocessor import shuffle
 from keras.preprocessing.image import ImageDataGenerator
 from models.NaiveSPPNet import EnhancedNaiveSPPNet
+from models.ResSppNet import EnhancedResSppNet
 
 validation_split = 0.9
 
@@ -41,7 +42,7 @@ generator = ImageDataGenerator(
 
 generator.fit(x_train_p)
 #
-classifier, classifier_p = EnhancedNaiveSPPNet(class_num = 12, enhanced_class_num = 10)
+classifier, classifier_p = EnhancedResSppNet(class_num = 12, enhanced_class_num = 10)
 
 classifier_p.fit_generator(generator.flow(x_train_p, y_train_p, batch_size = 32),
                            epochs = 100,
