@@ -45,6 +45,7 @@ classifier, classifier_p = EnhancedNaiveSPPNet(class_num = 12, enhanced_class_nu
 
 classifier_p.fit_generator(generator.flow(x_train_p, y_train_p, batch_size = 32),
                            epochs = 500,
+                           verbose = 1,
                            steps_per_epoch = x_train_p.shape[0] // 32,
                            validation_data = (x_test_p, y_test_p))
 
@@ -52,5 +53,6 @@ generator.fit(x_train)
 
 classifier.fit_generator(generator.flow(x_train, y_train, batch_size = 32),
                          epochs = 500,
+                         verbose = 1,
                          steps_per_epoch = x_train.shape[0] // 32,
                          validation_data = (x_test, y_test))
