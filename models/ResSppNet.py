@@ -65,16 +65,16 @@ def EnhancedResSppNet(class_num, enhanced_class_num):
     model = identity_block(model, 3, [128, 128, 512], stage = 3, block = 'c')
     model = identity_block(model, 3, [128, 128, 512], stage = 3, block = 'd')
 
-    model = conv_block(model, 3, [256, 256, 1024], stage = 4, block = 'a')
-    model = identity_block(model, 3, [256, 256, 1024], stage = 4, block = 'b')
-    model = identity_block(model, 3, [256, 256, 1024], stage = 4, block = 'c')
-    model = identity_block(model, 3, [256, 256, 1024], stage = 4, block = 'd')
-    model = identity_block(model, 3, [256, 256, 1024], stage = 4, block = 'e')
-    model = identity_block(model, 3, [256, 256, 1024], stage = 4, block = 'f')
-
-    model = conv_block(model, 3, [512, 512, 2048], stage = 5, block = 'a')
-    model = identity_block(model, 3, [512, 512, 2048], stage = 5, block = 'b')
-    model = identity_block(model, 3, [512, 512, 2048], stage = 5, block = 'c')
+    # model = conv_block(model, 3, [256, 256, 1024], stage = 4, block = 'a')
+    # model = identity_block(model, 3, [256, 256, 1024], stage = 4, block = 'b')
+    # model = identity_block(model, 3, [256, 256, 1024], stage = 4, block = 'c')
+    # model = identity_block(model, 3, [256, 256, 1024], stage = 4, block = 'd')
+    # model = identity_block(model, 3, [256, 256, 1024], stage = 4, block = 'e')
+    # model = identity_block(model, 3, [256, 256, 1024], stage = 4, block = 'f')
+    #
+    # model = conv_block(model, 3, [512, 512, 2048], stage = 5, block = 'a')
+    # model = identity_block(model, 3, [512, 512, 2048], stage = 5, block = 'b')
+    # model = identity_block(model, 3, [512, 512, 2048], stage = 5, block = 'c')
 
     # model = AveragePooling2D((7, 7))(model)
 
