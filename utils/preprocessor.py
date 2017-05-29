@@ -5,9 +5,9 @@ from sklearn.cluster import k_means
 
 # TODO: SIFT ALGORITHM - Linrong Jin
 def imageSIFT(img):
-    s = cv2.SURF()
-    keypoints = s.detect(img)
-    return keypoints
+    s = cv2.SIFT()
+    keypoints, descriptors = s.detectAndCompute(img, None)
+    return keypoints, descriptors
 
 print imageSIFT(cv2.imread('../data/image/1.jpg'))
 
