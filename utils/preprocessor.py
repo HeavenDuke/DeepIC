@@ -2,12 +2,14 @@ import cv2
 import numpy as np
 import random
 from sklearn.cluster import k_means
+from sklearn.preprocessing import normalize
 
 # TODO: SIFT ALGORITHM - Linrong Jin
-def imageSIFT(img):
+def imageSIFT(img, n_clusters = 200):
     s = cv2.SIFT()
-    ypoints, descriptors = s.detectAndCompute(img, None)
-    return descriptors.shape
+    keypoints, descriptors = s.detectAndCompute(img, None)
+    descriptors = normalize(descriptors, norm = 'l2', axis = 1)
+    return k_means(descriptors, n_clusters = n_clusters)
 
 print imageSIFT(cv2.imread('../data/image/1.jpg'))
 
