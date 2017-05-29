@@ -1,12 +1,15 @@
 import cv2
 import numpy as np
 import random
+from sklearn.cluster import k_means
 
 # TODO: SIFT ALGORITHM - Linrong Jin
 def imageSIFT(img):
     s = cv2.SURF()
     keypoints = s.detect(img)
     return keypoints
+
+print imageSIFT(cv2.imread('../data/image/1.jpg'))
 
 # TODO: SaliencyELD Call - Linrong Jin
 
