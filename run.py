@@ -1,7 +1,7 @@
 from utils.loader import construct_input_data
 from keras.datasets import cifar10
 from keras.utils.np_utils import to_categorical
-from utils.preprocessor import shuffle, extractSIFT
+from utils.preprocessor import shuffle, extractSIFT, resizeImages
 from keras.preprocessing.image import ImageDataGenerator
 from models.ResSppNet import EnhancedResSppNet
 import numpy as np
@@ -22,6 +22,7 @@ x_test, y_test = x[int(x.shape[0] * validation_split):], y[int(x.shape[0] * vali
 x_train_sift = extractSIFT(x_train)
 
 (x_train_p, y_train_p), (x_test_p, y_test_p) = cifar10.load_data()
+x_train_p, x_test_p = resizeImages(x_train_p, size = (64, 64)), resizeImages(x_test_p, size = (64, 64))
 y_train_p = to_categorical(y_train_p, 10)
 y_test_p = to_categorical(y_test_p, 10)
 

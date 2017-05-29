@@ -4,7 +4,7 @@ import random
 from sklearn.cluster import k_means
 from sklearn.preprocessing import normalize
 
-# TODO: SIFT ALGORITHM - Linrong Jin
+
 def imageSIFT(img, n_clusters = 100):
     s = cv2.SIFT()
     keypoints, descriptors = s.detectAndCompute(img, None)
@@ -17,7 +17,11 @@ def extractSIFT(images):
 
 # TODO: SaliencyELD Call - Linrong Jin
 
-# TODO: Data Augmentation - Lingkun Li
+
+def resizeImages(images, size = (64, 64)):
+    return np.asarray([cv2.resize(images[index], size) for index in range(images.shape[0])])
+
+
 def rotateImage(image, angle):
     height = image.shape[0]
     width = image.shape[1]
@@ -59,7 +63,7 @@ def noise(image, size):
     for i in range(0, size):
         xi = int(np.random.uniform(0,image.shape[1]))
         xj = int(np.random.uniform(0,image.shape[0]))
-        image[xj,xi] = 255
+        image[xj, xi] = 255
     return image
 
 
