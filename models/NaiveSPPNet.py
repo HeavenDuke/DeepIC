@@ -28,7 +28,7 @@ def NaiveSPPNet(class_num):
     return model
 
 
-def EnhancedNaiveSPPNet(class_num):
+def EnhancedNaiveSPPNet(class_num, enhanced_class_num):
     model = Sequential()
     model.add(Convolution2D(32, 3, 3, border_mode = 'same', input_shape = (None, None, 3)))
     model.add(Activation('relu'))
@@ -57,7 +57,7 @@ def EnhancedNaiveSPPNet(class_num):
     model1.add(Activation('softmax'))
     model1.compile(optimizer = RMSprop(lr = 1e-4, decay = 1e-6), loss = "categorical_crossentropy", metrics = ['accuracy'])
 
-    model2.add(Dense(10))
+    model2.add(Dense(enhanced_class_num))
     model2.add(Activation('softmax'))
     model2.compile(optimizer = RMSprop(lr = 1e-4, decay = 1e-6), loss = "categorical_crossentropy", metrics = ['accuracy'])
 

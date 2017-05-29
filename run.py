@@ -1,11 +1,14 @@
 from utils.loader import construct_input_data
 from keras.datasets import cifar10
-from keras.utils import to_categorical
+from keras.utils.np_utils import to_categorical
 from utils.preprocessor import shuffle
 from keras.preprocessing.image import ImageDataGenerator
 from models.NaiveSPPNet import EnhancedNaiveSPPNet
 
 validation_split = 0.9
+
+class_num = 12
+enhanced_class_num = 10
 
 x, y = construct_input_data('./data')
 x, y = shuffle(x, y)
@@ -38,7 +41,7 @@ generator = ImageDataGenerator(
 
 generator.fit(x_train_p)
 #
-classifier, classifier_p = EnhancedNaiveSPPNet(class_num = 12)
+classifier, classifier_p = EnhancedNaiveSPPNet(class_num = 12, enhanced_class_num = 10)
 
 classifier_p.fit_generator(generator.flow(x_train_p, y_train_p, batch_size = 32),
                            epochs = 500,
