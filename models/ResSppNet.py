@@ -48,7 +48,7 @@ def ResSppNet(class_number):
 
 
 def EnhancedResSppNet(class_num, enhanced_class_num):
-    _input = Input(shape = (64, 64, 3))
+    _input = Input(shape = (None, None, 3))
     model = _input
     model = ZeroPadding2D((3, 3))(model)
     model = Conv2D(64, (7, 7), strides = (2, 2))(model)
@@ -78,9 +78,9 @@ def EnhancedResSppNet(class_num, enhanced_class_num):
 
     # model = AveragePooling2D((7, 7))(model)
 
-    # model = SpatialPyramidPooling([1, 2, 4])(model)
+    model = SpatialPyramidPooling([1, 2, 4])(model)
 
-    model = Flatten()(model)
+    # model = Flatten()(model)
 
     model1 = Dense(units = class_num)(model)
     model1 = Activation(activation = "softmax")(model1)
