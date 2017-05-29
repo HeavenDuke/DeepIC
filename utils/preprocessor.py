@@ -11,6 +11,10 @@ def imageSIFT(img, n_clusters = 100):
     descriptors = normalize(descriptors, norm = 'l2', axis = 1)
     return np.reshape(k_means(descriptors, n_clusters = n_clusters), newshape = (1, n_clusters * 128))
 
+
+def extractSIFT(images):
+    return np.asarray([imageSIFT(images[index]) for index in range(images.shape[0])])
+
 # TODO: SaliencyELD Call - Linrong Jin
 
 # TODO: Data Augmentation - Lingkun Li

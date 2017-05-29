@@ -1,5 +1,5 @@
 from keras.models import Model
-from keras.layers import Dense, ZeroPadding2D, AveragePooling2D, BatchNormalization, Conv2D, MaxPooling2D, Activation, Flatten, Input, Concatenate
+from keras.layers import Dense, ZeroPadding2D, BatchNormalization, Conv2D, MaxPooling2D, Activation, Input, Concatenate
 from keras.optimizers import RMSprop
 from layers.SpatialPyramidPooling import SpatialPyramidPooling
 from keras.applications.resnet50 import identity_block, conv_block

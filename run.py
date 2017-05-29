@@ -1,9 +1,8 @@
 from utils.loader import construct_input_data
 from keras.datasets import cifar10
 from keras.utils.np_utils import to_categorical
-from utils.preprocessor import shuffle
+from utils.preprocessor import shuffle, extractSIFT
 from keras.preprocessing.image import ImageDataGenerator
-from models.NaiveSPPNet import EnhancedNaiveSPPNet
 from models.ResSppNet import EnhancedResSppNet
 
 validation_split = 0.9
@@ -15,6 +14,7 @@ x, y = construct_input_data('./data')
 x, y = shuffle(x, y)
 x_train, y_train = x[:int(x.shape[0] * validation_split)], y[:int(x.shape[0] * validation_split)]
 x_test, y_test = x[int(x.shape[0] * validation_split):], y[int(x.shape[0] * validation_split):]
+x_train_sift = extractSIFT(x_train)
 
 (x_train_p, y_train_p), (x_test_p, y_test_p) = cifar10.load_data()
 y_train_p = to_categorical(y_train_p, 10)
@@ -24,6 +24,8 @@ x_train_p = x_train_p.astype('float32')
 x_test_p = x_test_p.astype('float32')
 x_train_p /= 255.
 x_test_p /= 255.
+
+print "finish loading data"
 
 generator = ImageDataGenerator(
     featurewise_center = False,  # set input mean to 0 over the dataset
@@ -40,7 +42,7 @@ generator = ImageDataGenerator(
 
 generator.fit(x_train_p)
 #
-classifier, classifier_p = EnhancedResSppNet(class_num = 12, enhanced_class_num = 10)
+classifier, classifier_p, classifier_e = EnhancedResSppNet(class_num = 12, enhanced_class_num = 10)
 
 classifier_p.fit_generator(generator.flow(x_train_p, y_train_p, batch_size = 32),
                            epochs = 100,
@@ -57,3 +59,7 @@ classifier.fit_generator(generator.flow(x_train, y_train, batch_size = 32),
                          steps_per_epoch = x_train.shape[0] // 32,
                          validation_steps = 10,
                          validation_data = (x_test, y_test))
+
+classifier_e.fit([x_train, x_train_sift], y_train, batch_size = 32, epochs = 5000, validation_split = 0.1, verbose = True)
+
+classifier_e.save_weights('./weights/ResSppNet.h5')
