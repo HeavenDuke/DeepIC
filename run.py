@@ -17,6 +17,7 @@ x_extra, y_extra = construct_input_data('./data/extra')
 x, y = np.concatenate((x, x_extra)), np.concatenate((y, y_extra))
 
 x, y = shuffle(x, y)
+
 x = extractSIFT(x)
 x_train, y_train = x[:int(x.shape[0] * validation_split)], y[:int(x.shape[0] * validation_split)]
 x_test, y_test = x[int(x.shape[0] * validation_split):], y[int(x.shape[0] * validation_split):]
