@@ -55,10 +55,10 @@ def EnhancedNaiveSPPNet(class_num, enhanced_class_num):
     model.add(Dropout(0.5))
     model1.add(Dense(class_num))
     model1.add(Activation('softmax'))
-    model1.compile(optimizer = RMSprop(lr = 1e-3), loss = "categorical_crossentropy", metrics = ['accuracy'])
+    model1.compile(optimizer = RMSprop(lr = 1e-3, decay = 1e-3), loss = "categorical_crossentropy", metrics = ['accuracy'])
 
     model2.add(Dense(enhanced_class_num))
     model2.add(Activation('softmax'))
-    model2.compile(optimizer = RMSprop(lr = 1e-3), loss = "categorical_crossentropy", metrics = ['accuracy'])
+    model2.compile(optimizer = RMSprop(lr = 1e-3, decay = 1e-3), loss = "categorical_crossentropy", metrics = ['accuracy'])
 
     return model1, model2
