@@ -23,10 +23,28 @@ def extractSIFT(images):
 # the return is the image without background
 def removeBackground(img1, img2):
     ret, mask = cv2.threshold(img2, 10, 255, cv2.THRESH_BINARY)
-    contours, hiearchy = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
-    x, y, w, h = cv2.boundingRect(contours[0])
+    margin_x, margin_y = np.sum(mask, axis = 0), np.sum(mask, axis = 1)
+    left, right, top, bottom = -1, -1, -1, -1
+    cv2.imshow("image", mask)
+    cv2.waitKey()
+    for i in range(margin_x.shape[0]):
+        if margin_x[i] > 0:
+            left = i
+            break
+    for i in range(margin_x.shape[0]):
+        if margin_x[margin_x.shape[0] - i - 1] > 0:
+            right = margin_x.shape[0] - i - 1
+            break
+    for i in range(margin_y.shape[0]):
+        if margin_y[i] > 0:
+            top = i
+            break
+    for i in range(margin_y.shape[0]):
+        if margin_y[margin_y.shape[0] - i - 1] > 0:
+            bottom = margin_y.shape[0] - i - 1
+            break
     # img1_bg = cv2.bitwise_and(img1, img1, mask = mask)
-    return img1[y:y + h, x:x + w]
+    return img1[top:bottom, left:right]
 
 
 def resizeImages(images, size = (64, 64)):
