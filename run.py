@@ -20,7 +20,7 @@ x, y = x + x_extra, np.concatenate((y, y_extra))
 
 # x_sift = extractSIFT(x)
 
-x = np.asarray([cv2.resize(item, (64, 64)) for item in x])
+x = np.asarray([cv2.resize(item, (128, 128)) for item in x])
 
 x, y = x.astype(np.float32), y.astype(np.float32)
 
@@ -46,7 +46,7 @@ x_test, y_test = x[int(x.shape[0] * validation_split):], y[int(x.shape[0] * vali
 
 print "finish loading data"
 
-classifier, classifier_p = EnhancedResSppNet(class_num = 12, enhanced_class_num = 10)
+classifier, classifier_p = EnhancedNaiveSPPNet(class_num = 12, enhanced_class_num = 10)
 
 # classifier, classifier_p, classifier_e = EnhancedResSppNet(class_num = 12, enhanced_class_num = 10)
 
