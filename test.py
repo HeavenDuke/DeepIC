@@ -9,16 +9,14 @@ from utils.preprocessor import shuffle
 
 def imageSIFT(img, n_clusters = 100):
     s = cv2.SURF()
-    # pic = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    keypoints, descriptors = s.detectAndCompute(img, None)
+    pic = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    keypoints, descriptors = s.detectAndCompute(pic, None)
     descriptors = normalize(descriptors, norm = 'l2', axis = 1)
-    print descriptors.shape
     return np.reshape(k_means(descriptors, n_clusters = n_clusters), newshape = (1, n_clusters * 128))
 
 
 def extractSIFT(images):
     return np.asarray([imageSIFT(np.reshape(images[index], newshape = (64, 64, 3))) for index in range(images.shape[0])])
-
 
 validation_split = 0.9
 
@@ -33,3 +31,5 @@ x, y = np.concatenate((x, x_extra)), np.concatenate((y, y_extra))
 x, y = shuffle(x, y)
 
 x_sift = extractSIFT(x)
+
+print x_sift
