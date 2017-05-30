@@ -9,7 +9,6 @@ from utils.preprocessor import shuffle
 
 def imageSIFT(img, n_clusters = 100):
     s = cv2.SURF()
-    print img
     pic = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     keypoints, descriptors = s.detectAndCompute(pic, None)
     descriptors = normalize(descriptors, norm = 'l2', axis = 1)
@@ -17,7 +16,7 @@ def imageSIFT(img, n_clusters = 100):
 
 
 def extractSIFT(images):
-    return np.asarray([imageSIFT(np.reshape(images[index], newshape = (64, 64, 3))) for index in range(images.shape[0])])
+    return np.asarray([imageSIFT(images[index]) for index in range(len(images))])
 
 validation_split = 0.9
 
@@ -27,10 +26,12 @@ enhanced_class_num = 10
 x, y = construct_input_data('./data/train')
 x_extra, y_extra = construct_input_data('./data/extra')
 
-x, y = np.concatenate((x, x_extra)), np.concatenate((y, y_extra))
-
-x, y = shuffle(x, y)
+x, y = x + x_extra, np.concatenate((y, y_extra))
 
 x_sift = extractSIFT(x)
+
+x = np.asarray(x)
+
+x, y = shuffle(x, y)
 
 print x_sift
