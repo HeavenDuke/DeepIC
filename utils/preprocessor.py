@@ -16,7 +16,40 @@ def extractSIFT(images):
     return np.asarray([imageSIFT(images[index]) for index in range(images.shape[0])])
 
 # TODO: SaliencyELD Call - Linrong Jin
-
+# img1 is the original image, img2 is the image processed by SaliencyELD
+# the return is the image without background
+def romoveBackground(img1, img2)
+    sp1 = img1.shape
+    sp2 = img2.shape
+    if sp1[0] == sp2[0] and sp1[1] == sp2[1] :
+        for i in range(sp1[0]): #height(rows) of image
+            for j in range(sp1[1]): #width(colums) of image
+                if img2[i,j] < 1 :
+                    img1[i,j] = [0,0,0]
+        xArray = img2.sum(axis=0)
+        yArray = img2.sum(axis=1)
+        xLeft = 0
+        yTop = 0
+        for i in range(len(xArray)):
+            if xArray[i] == 0 :
+                xLeft = xLeft + 1
+            else :
+                break
+        for i in range(len(xArray)-1, -1, -1):
+            if xArray[i] != 0 :
+                xRight = i
+                break
+        for i in range(len(yArray)):
+            if yArray[i] == 0 :
+                yTop = yTop + 1
+            else :
+                break
+        for i in range(len(yArray)-1, -1, -1):
+            if xArray[i] != 0 :
+                yDown = i
+                break
+        img1 = img1[yTop:yDown,xLeft:xRight]
+        return img1
 
 def resizeImages(images, size = (64, 64)):
     return np.asarray([cv2.resize(images[index], size) for index in range(images.shape[0])])
