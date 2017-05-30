@@ -19,7 +19,7 @@ x, y = x + x_extra, np.concatenate((y, y_extra))
 
 # x_sift = extractSIFT(x)
 
-x = np.asarray([cv2.resize(item, (128, 128)) for item in x])
+x = np.asarray([cv2.resize(item, (64, 64)) for item in x])
 
 x, y = x.astype(np.float32), y.astype(np.float32)
 

@@ -25,8 +25,8 @@ def removeBackground(img1, img2):
     ret, mask = cv2.threshold(img2, 10, 255, cv2.THRESH_BINARY)
     contours, hiearchy = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
     x, y, w, h = cv2.boundingRect(contours[0])
-    img1_bg = cv2.bitwise_and(img1, img1, mask = mask)
-    return img1_bg[y:y + h, x:x + w]
+    # img1_bg = cv2.bitwise_and(img1, img1, mask = mask)
+    return img1[y:y + h, x:x + w]
 
 
 def resizeImages(images, size = (64, 64)):
