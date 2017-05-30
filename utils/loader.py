@@ -15,7 +15,7 @@ def construct_input_data(path, with_masks = True, with_label = True):
     image_files = [cv2.imread(path + "/image/" + str(f) + ".jpg", cv2.IMREAD_COLOR) for f in image_ids]
 
     if with_masks:
-        mask_files = [cv2.imread(path + "/mask/" + str(f) + ".png", cv2.IMREAD_COLOR) for f in image_ids]
+        mask_files = [cv2.imread(path + "/mask/" + str(f) + ".png", cv2.IMREAD_GRAYSCALE) for f in image_ids]
         image_files = [removeBackground(image_files[index], mask_files[index]) for index in range(len(mask_files))]
 
     if with_label:
