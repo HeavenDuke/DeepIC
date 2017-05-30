@@ -297,8 +297,8 @@ class ResnetBuilder(object):
         return ResnetBuilder.build(input_shape, num_outputs, bottleneck, [3, 8, 36, 3])
 
 from keras.optimizers import RMSprop
-classifier = ResnetBuilder.build_resnet_18((3, 128, 128), 12)
-classifier.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 1e-3, decay = 1e-4), metrics = ['accuracy'])
+classifier = ResnetBuilder.build_resnet_34((3, 128, 128), 12)
+classifier.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 1e-4, decay = 1e-6), metrics = ['accuracy'])
 
 # classifier, classifier_p = EnhancedNaiveSPPNet(class_num = 12, enhanced_class_num = 10)
 
