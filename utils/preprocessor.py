@@ -13,7 +13,7 @@ def imageSIFT(img, n_clusters = 100):
 
 
 def extractSIFT(images):
-    return np.asarray([imageSIFT(images[index]) for index in range(images.shape[0])])
+    return np.asarray([imageSIFT(np.reshape(images[index], newshape = (64, 64, 3))) for index in range(images.shape[0])])
 
 
 # TODO: SaliencyELD Call - Linrong Jin

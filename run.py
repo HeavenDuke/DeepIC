@@ -18,9 +18,9 @@ x, y = np.concatenate((x, x_extra)), np.concatenate((y, y_extra))
 
 x, y = shuffle(x, y)
 
-x = extractSIFT(x)
-x_train, y_train = x[:int(x.shape[0] * validation_split)], y[:int(x.shape[0] * validation_split)]
-x_test, y_test = x[int(x.shape[0] * validation_split):], y[int(x.shape[0] * validation_split):]
+x_sift = extractSIFT(x)
+x_train, x_train_sift, y_train = x[:int(x.shape[0] * validation_split)], x_sift[:int(x.shape[0] * validation_split)], y[:int(x.shape[0] * validation_split)]
+x_test, x_test_sift, y_test = x[int(x.shape[0] * validation_split):], x_sift[int(x.shape[0] * validation_split):], y[int(x.shape[0] * validation_split):]
 
 (x_train_p, y_train_p), (x_test_p, y_test_p) = cifar10.load_data()
 x_train_p, x_test_p = resizeImages(x_train_p, size = (64, 64)), resizeImages(x_test_p, size = (64, 64))
