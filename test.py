@@ -8,6 +8,7 @@ from utils.preprocessor import shuffle
 
 
 def imageSIFT(img, n_clusters = 100):
+    print img
     s = cv2.SIFT()
     keypoints, descriptors = s.detectAndCompute(img, None)
     descriptors = normalize(descriptors, norm = 'l2', axis = 1)
