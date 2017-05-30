@@ -22,7 +22,7 @@ x, y = x + x_extra, np.concatenate((y, y_extra))
 
 # x_sift = extractSIFT(x)
 
-x = np.asarray([cv2.resize(item, (128, 128)) for item in x])
+x = np.asarray([np.reshape(cv2.resize(item, (128, 128)), newshape = (128, 128, 1)) for item in x])
 
 x, y = x.astype(np.float32), y.astype(np.float32)
 
@@ -297,7 +297,7 @@ class ResnetBuilder(object):
         return ResnetBuilder.build(input_shape, num_outputs, bottleneck, [3, 8, 36, 3])
 
 from keras.optimizers import RMSprop
-classifier = ResnetBuilder.build_resnet_34((3, 128, 128), 12)
+classifier = ResnetBuilder.build_resnet_34((1, 128, 128), 12)
 classifier.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 1e-4, decay = 1e-6), metrics = ['accuracy'])
 
 # classifier, classifier_p = EnhancedNaiveSPPNet(class_num = 12, enhanced_class_num = 10)
