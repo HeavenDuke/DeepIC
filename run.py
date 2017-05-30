@@ -45,7 +45,9 @@ x_test_p /= 255.
 
 print "finish loading data"
 
-classifier, classifier_p, classifier_e = EnhancedResSppNet(class_num = 12, enhanced_class_num = 10)
+classifier, classifier_p = EnhancedResSppNet(class_num = 12, enhanced_class_num = 10)
+
+# classifier, classifier_p, classifier_e = EnhancedResSppNet(class_num = 12, enhanced_class_num = 10)
 
 generator = ImageDataGenerator(
     featurewise_center = False,  # set input mean to 0 over the dataset
