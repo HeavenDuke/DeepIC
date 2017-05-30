@@ -46,7 +46,7 @@ x_test, y_test = x[int(x.shape[0] * validation_split):], y[int(x.shape[0] * vali
 
 print "finish loading data"
 
-classifier, classifier_p = EnhancedNaiveSPPNet(class_num = 12, enhanced_class_num = 10)
+classifier, classifier_p = EnhancedResSppNet(class_num = 12, enhanced_class_num = 10)
 
 # classifier, classifier_p, classifier_e = EnhancedResSppNet(class_num = 12, enhanced_class_num = 10)
 
