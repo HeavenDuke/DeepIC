@@ -14,7 +14,7 @@ def imageSIFT(img, n_clusters = 50):
     descriptors = normalize(descriptors, norm = 'l2', axis = 1)
     centroid, l, i = k_means(descriptors, n_clusters = n_clusters)
     print centroid.shape
-    return np.reshape(centroid, newshape = (1, n_clusters * 128))
+    return np.reshape(centroid, newshape = (1, n_clusters * 64))
 
 
 def extractSIFT(images):
