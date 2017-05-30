@@ -5,7 +5,7 @@ from sklearn.cluster import k_means
 from sklearn.preprocessing import normalize
 
 
-def imageSIFT(img, n_clusters = 100):
+def imageSIFT(img, n_clusters = 20):
     s = cv2.SURF()
     pic = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     keypoints, descriptors = s.detectAndCompute(pic, None)
@@ -22,37 +22,11 @@ def extractSIFT(images):
 # img1 is the original image, img2 is the image processed by SaliencyELD
 # the return is the image without background
 def removeBackground(img1, img2):
-    sp1 = img1.shape
-    sp2 = img2.shape
-    if sp1[0] == sp2[0] and sp1[1] == sp2[1]:
-        for i in range(sp1[0]):  # height(rows) of image
-            for j in range(sp1[1]):  # width(colums) of image
-                if img2[i, j] < 1:
-                    img1[i, j] = [0, 0, 0]
-        xArray = img2.sum(axis = 0)
-        yArray = img2.sum(axis = 1)
-        xLeft = 0
-        yTop = 0
-        for i in range(len(xArray)):
-            if xArray[i] == 0:
-                xLeft += 1
-            else:
-                break
-        for i in range(len(xArray) - 1, -1, -1):
-            if xArray[i] != 0:
-                xRight = i
-                break
-        for i in range(len(yArray)):
-            if yArray[i] == 0:
-                yTop += 1
-            else:
-                break
-        for i in range(len(yArray) - 1, -1, -1):
-            if xArray[i] != 0:
-                yDown = i
-                break
-        img1 = img1[yTop:yDown, xLeft:xRight]
-        return img1
+    ret, mask = cv2.threshold(img2, 10, 255, cv2.THRESH_BINARY)
+    contours, hiearchy, x = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+    x, y, w, h = cv2.boundingRect(contours)
+    img1_bg = cv2.bitwise_and(img1, img1, mask = mask)
+    return img1_bg[y:y + h, x:x + w]
 
 
 def resizeImages(images, size = (64, 64)):
