@@ -7,7 +7,7 @@ from utils.loader import construct_input_data
 from utils.preprocessor import shuffle
 
 
-def imageSIFT(img, n_clusters = 50):
+def imageSIFT(img, n_clusters = 20):
     s = cv2.SURF()
     pic = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     keypoints, descriptors = s.detectAndCompute(pic, None)
