@@ -6,14 +6,16 @@ from sklearn.preprocessing import normalize
 
 
 def imageSIFT(img, n_clusters = 100):
-    s = cv2.SIFT()
-    keypoints, descriptors = s.detectAndCompute(img, None)
+    s = cv2.SURF()
+    pic = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    keypoints, descriptors = s.detectAndCompute(pic, None)
     descriptors = normalize(descriptors, norm = 'l2', axis = 1)
-    return np.reshape(k_means(descriptors, n_clusters = n_clusters), newshape = (1, n_clusters * 128))
+    centroid, l, i = k_means(descriptors, n_clusters = n_clusters)
+    return np.reshape(centroid, newshape = (1, n_clusters * 64))
 
 
 def extractSIFT(images):
-    return np.asarray([imageSIFT(np.reshape(images[index], newshape = (64, 64, 3))) for index in range(images.shape[0])])
+    return np.asarray([imageSIFT(images[index]) for index in range(len(images))])
 
 
 # TODO: SaliencyELD Call - Linrong Jin
@@ -102,10 +104,10 @@ def noise(image, size):
     return image
 
 
-def shuffle(image, label):
-    _images, _labels = image.tolist(), label.tolist()
+def shuffle(image, label, features):
+    _images, _labels, _features = image.tolist(), label.tolist(), features.tolist()
     table = []
     for i in range(len(_images)):
-        table.append([_images[i], _labels[i]])
+        table.append([_images[i], _labels[i], _features[i]])
     random.shuffle(table)
-    return np.asarray([item[0] for item in table]), np.asarray([item[1] for item in table])
+    return np.asarray([item[0] for item in table]), np.asarray([item[1] for item in table]), np.asarray([item[2] for item in table])

@@ -5,6 +5,7 @@ from utils.preprocessor import shuffle, extractSIFT, resizeImages
 from keras.preprocessing.image import ImageDataGenerator
 from models.ResSppNet import EnhancedResSppNet
 import numpy as np
+import cv2
 
 validation_split = 0.9
 
@@ -14,15 +15,17 @@ enhanced_class_num = 10
 x, y = construct_input_data('./data/train')
 x_extra, y_extra = construct_input_data('./data/extra')
 
-x, y = np.concatenate((x, x_extra)), np.concatenate((y, y_extra))
-
-x, y = shuffle(x, y)
+x, y = x + x_extra, np.concatenate((y, y_extra))
 
 x_sift = extractSIFT(x)
+
+x = np.asarray([cv2.resize(item, (128, 128)) for item in x])
 
 x, y = x.astype(np.float32), y.astype(np.float32)
 
 x /= 255.
+
+x, y, x_sift = shuffle(x, y, x_sift)
 
 x_train, x_train_sift, y_train = x[:int(x.shape[0] * validation_split)], x_sift[:int(x.shape[0] * validation_split)], y[:int(x.shape[0] * validation_split)]
 x_test, x_test_sift, y_test = x[int(x.shape[0] * validation_split):], x_sift[int(x.shape[0] * validation_split):], y[int(x.shape[0] * validation_split):]
