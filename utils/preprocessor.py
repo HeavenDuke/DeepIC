@@ -104,10 +104,18 @@ def noise(image, size):
     return image
 
 
-def shuffle(image, label, features):
-    _images, _labels, _features = image.tolist(), label.tolist(), features.tolist()
-    table = []
-    for i in range(len(_images)):
-        table.append([_images[i], _labels[i], _features[i]])
-    random.shuffle(table)
-    return np.asarray([item[0] for item in table]), np.asarray([item[1] for item in table]), np.asarray([item[2] for item in table])
+def shuffle(image, label, features = None):
+    if features is not None:
+        _images, _labels, _features = image.tolist(), label.tolist(), features.tolist()
+        table = []
+        for i in range(len(_images)):
+            table.append([_images[i], _labels[i], _features[i]])
+        random.shuffle(table)
+        return np.asarray([item[0] for item in table]), np.asarray([item[1] for item in table]), np.asarray([item[2] for item in table])
+    else:
+        _images, _labels = image.tolist(), label.tolist()
+        table = []
+        for i in range(len(_images)):
+            table.append([_images[i], _labels[i]])
+        random.shuffle(table)
+        return np.asarray([item[0] for item in table]), np.asarray([item[1] for item in table]), None
