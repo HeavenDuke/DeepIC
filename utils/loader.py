@@ -11,7 +11,7 @@ def construct_input_data(path, with_label = True):
         return result
 
     image_ids = [int(f.replace('.jpg', '')) for f in os.listdir(path + '/image')]
-    image_files = [cv2.resize(cv2.imread(path + "/image/" + str(f) + ".jpg", cv2.IMREAD_COLOR), (64, 64)) for f in
+    image_files = [cv2.imread(path + "/image/" + str(f) + ".jpg", cv2.IMREAD_COLOR) for f in
                    image_ids]
 
     if with_label:

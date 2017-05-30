@@ -30,8 +30,8 @@ x, y = x + x_extra, np.concatenate((y, y_extra))
 
 x_sift = extractSIFT(x)
 
-x = np.asarray(x)
-
-x, y = shuffle(x, y)
+# x = np.asarray(x)
+#
+# x, y = shuffle(x, y)
 
 print x_sift
