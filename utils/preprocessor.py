@@ -25,8 +25,6 @@ def removeBackground(img1, img2):
     ret, mask = cv2.threshold(img2, 10, 255, cv2.THRESH_BINARY)
     margin_x, margin_y = np.sum(mask, axis = 0), np.sum(mask, axis = 1)
     left, right, top, bottom = -1, -1, -1, -1
-    cv2.imshow("image", mask)
-    cv2.waitKey()
     for i in range(margin_x.shape[0]):
         if margin_x[i] > 0:
             left = i
