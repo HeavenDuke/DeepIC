@@ -9,7 +9,6 @@ from utils.preprocessor import shuffle
 
 def imageSIFT(img, n_clusters = 50):
     s = cv2.SURF()
-    s.extended = True
     pic = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     keypoints, descriptors = s.detectAndCompute(pic, None)
     descriptors = normalize(descriptors, norm = 'l2', axis = 1)
