@@ -8,10 +8,11 @@ from utils.preprocessor import shuffle
 
 
 def imageSIFT(img, n_clusters = 100):
-    print img.shape
-    s = cv2.SIFT()
+    s = cv2.SURF()
+    # pic = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     keypoints, descriptors = s.detectAndCompute(img, None)
     descriptors = normalize(descriptors, norm = 'l2', axis = 1)
+    print descriptors.shape
     return np.reshape(k_means(descriptors, n_clusters = n_clusters), newshape = (1, n_clusters * 128))
 
 
