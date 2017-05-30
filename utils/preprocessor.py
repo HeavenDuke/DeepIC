@@ -15,41 +15,43 @@ def imageSIFT(img, n_clusters = 100):
 def extractSIFT(images):
     return np.asarray([imageSIFT(images[index]) for index in range(images.shape[0])])
 
+
 # TODO: SaliencyELD Call - Linrong Jin
 # img1 is the original image, img2 is the image processed by SaliencyELD
 # the return is the image without background
-def romoveBackground(img1, img2)
+def removeBackground(img1, img2):
     sp1 = img1.shape
     sp2 = img2.shape
-    if sp1[0] == sp2[0] and sp1[1] == sp2[1] :
-        for i in range(sp1[0]): #height(rows) of image
-            for j in range(sp1[1]): #width(colums) of image
-                if img2[i,j] < 1 :
-                    img1[i,j] = [0,0,0]
-        xArray = img2.sum(axis=0)
-        yArray = img2.sum(axis=1)
+    if sp1[0] == sp2[0] and sp1[1] == sp2[1]:
+        for i in range(sp1[0]):  # height(rows) of image
+            for j in range(sp1[1]):  # width(colums) of image
+                if img2[i, j] < 1:
+                    img1[i, j] = [0, 0, 0]
+        xArray = img2.sum(axis = 0)
+        yArray = img2.sum(axis = 1)
         xLeft = 0
         yTop = 0
         for i in range(len(xArray)):
-            if xArray[i] == 0 :
-                xLeft = xLeft + 1
-            else :
+            if xArray[i] == 0:
+                xLeft += 1
+            else:
                 break
-        for i in range(len(xArray)-1, -1, -1):
-            if xArray[i] != 0 :
+        for i in range(len(xArray) - 1, -1, -1):
+            if xArray[i] != 0:
                 xRight = i
                 break
         for i in range(len(yArray)):
-            if yArray[i] == 0 :
-                yTop = yTop + 1
-            else :
+            if yArray[i] == 0:
+                yTop += 1
+            else:
                 break
-        for i in range(len(yArray)-1, -1, -1):
-            if xArray[i] != 0 :
+        for i in range(len(yArray) - 1, -1, -1):
+            if xArray[i] != 0:
                 yDown = i
                 break
-        img1 = img1[yTop:yDown,xLeft:xRight]
+        img1 = img1[yTop:yDown, xLeft:xRight]
         return img1
+
 
 def resizeImages(images, size = (64, 64)):
     return np.asarray([cv2.resize(images[index], size) for index in range(images.shape[0])])
@@ -61,9 +63,9 @@ def rotateImage(image, angle):
     height_big = height
     width_big = width
     image_big = cv2.resize(image, (width_big, height_big))
-    image_center = (width_big/2, height_big/2)
+    image_center = (width_big / 2, height_big / 2)
     rot_mat = cv2.getRotationMatrix2D(image_center, angle, 1.0)
-    result = cv2.warpAffine(image_big, rot_mat, (width_big, height_big), flags=cv2.INTER_LINEAR)
+    result = cv2.warpAffine(image_big, rot_mat, (width_big, height_big), flags = cv2.INTER_LINEAR)
     return result
 
 
@@ -74,17 +76,17 @@ def flipImage(image, flag):
 
 def scale(image, multiple, interpolation = None):
     rows, cols, channels = image.shape
-    return cv2.resize(image, (int(cols*multiple),int(rows*multiple)), interpolation=interpolation)
+    return cv2.resize(image, (int(cols * multiple), int(rows * multiple)), interpolation = interpolation)
 
 
 def zoom(image, dsize, interpolation = None):
-    return cv2.resize(image, dsize, interpolation=interpolation)
+    return cv2.resize(image, dsize, interpolation = interpolation)
 
 
 def shift(image, x, y):
-    M = np.array([[1, 0, x],[0, 1, y]], np.float32)
+    M = np.array([[1, 0, x], [0, 1, y]], np.float32)
     rows, cols, channels = image.shape
-    return cv2.warpAffine(image, M, (cols,rows))
+    return cv2.warpAffine(image, M, (cols, rows))
 
 
 def contrast(image, alpha, beta):
@@ -94,8 +96,8 @@ def contrast(image, alpha, beta):
 
 def noise(image, size):
     for i in range(0, size):
-        xi = int(np.random.uniform(0,image.shape[1]))
-        xj = int(np.random.uniform(0,image.shape[0]))
+        xi = int(np.random.uniform(0, image.shape[1]))
+        xj = int(np.random.uniform(0, image.shape[0]))
         image[xj, xi] = 255
     return image
 
