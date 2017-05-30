@@ -1,3 +1,5 @@
+from __future__ import division
+
 from utils.loader import construct_input_data
 from keras.datasets import cifar10
 from keras.utils.np_utils import to_categorical
@@ -45,8 +47,6 @@ x_test, y_test = x[int(x.shape[0] * validation_split):], y[int(x.shape[0] * vali
 # x_test_p /= 255.
 
 print "finish loading data"
-
-from __future__ import division
 
 import six
 from keras.models import Model
