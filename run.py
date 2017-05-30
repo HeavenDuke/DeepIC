@@ -19,6 +19,11 @@ x, y = np.concatenate((x, x_extra)), np.concatenate((y, y_extra))
 x, y = shuffle(x, y)
 
 x_sift = extractSIFT(x)
+
+x, y = x.astype(np.float32), y.astype(np.float32)
+
+x /= 255.
+
 x_train, x_train_sift, y_train = x[:int(x.shape[0] * validation_split)], x_sift[:int(x.shape[0] * validation_split)], y[:int(x.shape[0] * validation_split)]
 x_test, x_test_sift, y_test = x[int(x.shape[0] * validation_split):], x_sift[int(x.shape[0] * validation_split):], y[int(x.shape[0] * validation_split):]
 

@@ -22,7 +22,7 @@ def construct_input_data(path, with_label = True):
             labels_map[int(line.split(" ")[0])] = vectorize(int(line.split(" ")[1].replace("\r", "").replace("\n", "")))
         image_labels = [labels_map[image_id] for image_id in image_ids]
 
-        return np.asarray(image_files, dtype = np.float32) / 255., np.asarray(image_labels, dtype = np.float32)
+        return np.asarray(image_files), np.asarray(image_labels)
 
     else:
-        return image_ids, np.asarray(image_files, dtype = np.float32) / 255., None
+        return image_ids, np.asarray(image_files), None
