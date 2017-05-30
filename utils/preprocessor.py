@@ -13,7 +13,7 @@ def imageSIFT(img, n_clusters = 20):
     centroid, l, i = k_means(descriptors, n_clusters = n_clusters)
     return np.reshape(centroid, newshape = (1, n_clusters * 64))
 
-
+# TODO: Rewrite this function to construct a bag-of-word feature
 def extractSIFT(images):
     return np.asarray([imageSIFT(images[index]) for index in range(len(images))])
 
