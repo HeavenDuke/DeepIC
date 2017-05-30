@@ -12,7 +12,7 @@ def imageSIFT(img, n_clusters = 100):
     pic = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     keypoints, descriptors = s.detectAndCompute(pic, None)
     descriptors = normalize(descriptors, norm = 'l2', axis = 1)
-    centroid, l, i, b = k_means(descriptors, n_clusters = n_clusters)
+    centroid, l, i = k_means(descriptors, n_clusters = n_clusters)
     return np.reshape(centroid, newshape = (1, n_clusters * 128))
 
 
