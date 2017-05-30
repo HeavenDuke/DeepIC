@@ -10,7 +10,7 @@ from models.NaiveSPPNet import EnhancedNaiveSPPNet
 import numpy as np
 import cv2
 
-validation_split = 0.9
+validation_split = 0.8
 
 class_num = 12
 enhanced_class_num = 10
