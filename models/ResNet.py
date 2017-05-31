@@ -225,9 +225,9 @@ class ResnetBuilder(object):
         block_shape = K.int_shape(block)
         pool2 = AveragePooling2D(pool_size=(block_shape[ROW_AXIS], block_shape[COL_AXIS]),
                                  strides=(1, 1))(block)
-        # flatten1 = Flatten()(pool2)
+        flatten1 = Flatten()(pool2)
 
-        flatten1 = SpatialPyramidPooling([1, 2])(pool2)
+        # flatten1 = SpatialPyramidPooling([1, 2])(pool2)
 
         if enhanced:
             dense = Dense(units=num_outputs, kernel_initializer="he_normal",
