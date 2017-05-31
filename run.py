@@ -53,7 +53,7 @@ print "finish loading data"
 
 # classifier, classifier_p, classifier_e = EnhancedResSppNet(class_num = 12, enhanced_class_num = 10)
 
-classifier, classifier_p = ResnetBuilder.build_resnet_34(input_shape = (3, 128, 128), num_outputs = 12, enhanced = True)
+classifier, classifier_p = ResnetBuilder.build_resnet_18(input_shape = (3, 128, 128), num_outputs = 12, enhanced = True)
 classifier_p.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 1e-3, decay = 1e-3), metrics = ['accuracy'])
 classifier.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 5e-4, decay = 1e-3), metrics = ['accuracy'])
 
