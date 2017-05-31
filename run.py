@@ -88,9 +88,9 @@ classifier.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 5
 #                          validation_steps = 10,
 #                          validation_data = (x_test, y_test))
 
-classifier_p.fit(x_train_p, y_train_p, epochs = 100, shuffle = True, verbose = True, validation_data = (x_test_p, y_test_p))
+classifier_p.fit(x_train_p, y_train_p, batch_size = 128, epochs = 100, shuffle = True, verbose = True, validation_data = (x_test_p, y_test_p))
 
-classifier.fit(x, y, validation_split = 0.1, epochs = 100, shuffle = True, verbose = True)
+classifier.fit(x, y, batch_size = 32, validation_split = 0.1, epochs = 100, shuffle = True, verbose = True)
 
 # classifier_e.fit([x_train, x_train_sift], y_train, batch_size = 32, epochs = 100, validation_split = 0.1, verbose = True)
 
