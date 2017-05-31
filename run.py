@@ -54,7 +54,7 @@ print "finish loading data"
 # classifier, classifier_p, classifier_e = EnhancedResSppNet(class_num = 12, enhanced_class_num = 10)
 
 classifier = ResnetBuilder.build_resnet_34(input_shape = (3, 128, 128), num_outputs = 12)
-classifier.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 1e-4, decay = 1e-6), metrics = ['accuracy'])
+classifier.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 5e-4, decay = 1e-6), metrics = ['accuracy'])
 
 # generator = ImageDataGenerator(
 #     featurewise_center = False,  # set input mean to 0 over the dataset
