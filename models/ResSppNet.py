@@ -78,7 +78,7 @@ def EnhancedResSppNet(class_num, enhanced_class_num):
 
     model = AveragePooling2D((7, 7))(model)
 
-    model = SpatialPyramidPooling([1, 2, 4])(model)
+    # model = SpatialPyramidPooling([1, 2, 4])(model)
 
     model1 = Dense(units = class_num)(model)
     model1 = Activation(activation = "softmax")(model1)
