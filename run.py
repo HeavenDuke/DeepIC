@@ -37,15 +37,15 @@ x, y, x_sift = shuffle(x, y, None)# x_sift)
 x_train, y_train = x[:int(x.shape[0] * validation_split)], y[:int(x.shape[0] * validation_split)]
 x_test, y_test = x[int(x.shape[0] * validation_split):], y[int(x.shape[0] * validation_split):]
 
-# (x_train_p, y_train_p), (x_test_p, y_test_p) = cifar10.load_data()
-# x_train_p, x_test_p = resizeImages(x_train_p, size = (128, 128)), resizeImages(x_test_p, size = (128, 128))
-# y_train_p = to_categorical(y_train_p, 10)
-# y_test_p = to_categorical(y_test_p, 10)
+(x_train_p, y_train_p), (x_test_p, y_test_p) = cifar10.load_data()
+x_train_p, x_test_p = resizeImages(x_train_p, size = (128, 128)), resizeImages(x_test_p, size = (128, 128))
+y_train_p = to_categorical(y_train_p, 10)
+y_test_p = to_categorical(y_test_p, 10)
 #
-# x_train_p = x_train_p.astype('float32')
-# x_test_p = x_test_p.astype('float32')
-# x_train_p /= 255.
-# x_test_p /= 255.
+x_train_p = x_train_p.astype('float32')
+x_test_p = x_test_p.astype('float32')
+x_train_p /= 255.
+x_test_p /= 255.
 
 print "finish loading data"
 
@@ -53,7 +53,8 @@ print "finish loading data"
 
 # classifier, classifier_p, classifier_e = EnhancedResSppNet(class_num = 12, enhanced_class_num = 10)
 
-classifier = ResnetBuilder.build_resnet_34(input_shape = (3, 128, 128), num_outputs = 12)
+classifier, classifier_p = ResnetBuilder.build_resnet_34(input_shape = (3, 128, 128), num_outputs = 12, enhanced = True)
+classifier_p.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 1e-3, decay = 1e-3), metrics = ['accuracy'])
 classifier.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 5e-4, decay = 1e-3), metrics = ['accuracy'])
 
 # generator = ImageDataGenerator(
@@ -86,6 +87,8 @@ classifier.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 5
 #                          steps_per_epoch = x_train.shape[0] // 32,
 #                          validation_steps = 10,
 #                          validation_data = (x_test, y_test))
+
+classifier_p.fit(x_train_p, y_train_p, epochs = 100, shuffle = True, verbose = True, validation_data = (x_test_p, y_test_p))
 
 classifier.fit(x, y, validation_split = 0.1, epochs = 100, shuffle = True, verbose = True)
 
