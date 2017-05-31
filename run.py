@@ -49,13 +49,13 @@ x_test_p /= 255.
 
 print "finish loading data"
 
-classifier, classifier_p = EnhancedResSppNet(class_num = 12, enhanced_class_num = 10)
+# classifier, classifier_p = EnhancedResSppNet(class_num = 12, enhanced_class_num = 10)
 
 # classifier, classifier_p, classifier_e = EnhancedResSppNet(class_num = 12, enhanced_class_num = 10)
 
-# classifier, classifier_p = ResnetBuilder.build_resnet_18(input_shape = (3, 128, 128), num_outputs = 12, enhanced = True)
-# classifier_p.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 1e-3, decay = 1e-3), metrics = ['accuracy'])
-# classifier.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 5e-4, decay = 1e-3), metrics = ['accuracy'])
+classifier, classifier_p = ResnetBuilder.build_resnet_18(input_shape = (3, 128, 128), num_outputs = 12, enhanced = True)
+classifier_p.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 1e-3, decay = 1e-3), metrics = ['accuracy'])
+classifier.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 5e-4, decay = 1e-3), metrics = ['accuracy'])
 
 # generator = ImageDataGenerator(
 #     featurewise_center = False,  # set input mean to 0 over the dataset
@@ -88,7 +88,7 @@ classifier, classifier_p = EnhancedResSppNet(class_num = 12, enhanced_class_num 
 #                          validation_steps = 10,
 #                          validation_data = (x_test, y_test))
 
-classifier_p.fit(x_train_p, y_train_p, batch_size = 128, epochs = 100, shuffle = True, verbose = True, validation_data = (x_test_p, y_test_p))
+classifier_p.fit(x_train_p, y_train_p, batch_size = 128, epochs = 50, shuffle = True, verbose = True, validation_data = (x_test_p, y_test_p))
 
 classifier.fit(x, y, batch_size = 32, validation_split = 0.1, epochs = 100, shuffle = True, verbose = True)
 
