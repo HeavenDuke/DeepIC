@@ -5,22 +5,29 @@ from sklearn.cluster import k_means
 from sklearn.preprocessing import normalize
 
 
-def imageSIFT(img, n_clusters = 20):
+def imageSIFT(img):
     s = cv2.SURF()
     pic = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     keypoints, descriptors = s.detectAndCompute(pic, None)
-    descriptors = normalize(descriptors, norm = 'l2', axis = 1)
-    centroid, l, i = k_means(descriptors, n_clusters = n_clusters)
-    return np.reshape(centroid, newshape = (1, n_clusters * 64))
-
-# TODO: Rewrite this function to construct a bag-of-word feature
-def extractSIFT(images):
-    return np.asarray([imageSIFT(images[index]) for index in range(len(images))])
+    return descriptors
 
 
-# TODO: SaliencyELD Call - Linrong Jin
-# img1 is the original image, img2 is the image processed by SaliencyELD
-# the return is the image without background
+def extractSIFT(images, n_clusters = 100):
+    sifts = [imageSIFT(images[index]) for index in range(len(images))]
+    _map = [[], [], np.zeros(shape = (len(images), n_clusters))]
+    cnt = 0
+    for patch in sifts:
+        for point in patch:
+            _map[0].append(point)
+            _map[1].append(cnt)
+        cnt += 1
+    _map[0] = normalize(np.asarray(_map[0]), norm = "l1", axis = 0)
+    centroid, labels = k_means(_map[0], n_clusters = n_clusters)
+    for index in labels.shape[0]:
+        _map[2][_map[1][index], labels[index]] += 1
+    return normalize(_map[2], axis = 0)
+
+
 def removeBackground(img1, img2):
     ret, mask = cv2.threshold(img2, 10, 255, cv2.THRESH_BINARY)
     margin_x, margin_y = np.sum(mask, axis = 0), np.sum(mask, axis = 1)
@@ -61,7 +68,6 @@ def rotateImage(image, angle):
     return result
 
 
-# flag = 0 / 1 / -1
 def flipImage(image, flag):
     return cv2.flip(image, flag)
 
