@@ -210,7 +210,7 @@ class ResnetBuilder(object):
 
         input = Input(shape=input_shape)
         conv1 = _conv_bn_relu(filters=64, kernel_size=(7, 7), strides=(2, 2))(input)
-        pool1 = MaxPooling2D(pool_size=(3, 3), strides=(2, 2))(conv1)
+        pool1 = MaxPooling2D(pool_size=(3, 3), strides=(2, 2), padding = "same")(conv1)
 
         block = pool1
         filters = 64
@@ -225,9 +225,9 @@ class ResnetBuilder(object):
         block_shape = K.int_shape(block)
         pool2 = AveragePooling2D(pool_size=(block_shape[ROW_AXIS], block_shape[COL_AXIS]),
                                  strides=(1, 1))(block)
-        flatten1 = Flatten()(pool2)
+        # flatten1 = Flatten()(pool2)
 
-        # flatten1 = SpatialPyramidPooling([1, 2, 4])(pool2)
+        flatten1 = SpatialPyramidPooling([1, 2])(pool2)
 
         if enhanced:
             dense = Dense(units=num_outputs, kernel_initializer="he_normal",
