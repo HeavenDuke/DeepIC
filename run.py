@@ -57,38 +57,40 @@ classifier, classifier_p = ResnetBuilder.build_resnet_50(input_shape = (3, 128, 
 classifier_p.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 1e-3, decay = 1e-3), metrics = ['accuracy'])
 classifier.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 5e-4, decay = 1e-3), metrics = ['accuracy'])
 
-# generator = ImageDataGenerator(
-#     featurewise_center = False,  # set input mean to 0 over the dataset
-#     samplewise_center = False,  # set each sample mean to 0
-#     featurewise_std_normalization = False,  # divide inputs by std of the dataset
-#     samplewise_std_normalization = False,  # divide each input by its std
-#     zca_whitening = False,  # apply ZCA whitening
-#     rotation_range = 0,  # randomly rotate images in the range (degrees, 0 to 180)
-#     width_shift_range = 0.1,  # randomly shift images horizontally (fraction of total width)
-#     height_shift_range = 0.1,  # randomly shift images vertically (fraction of total height)
-#     horizontal_flip = True,  # randomly flip images
-#     vertical_flip = False  # randomly flip images
-# )
+generator = ImageDataGenerator(
+    featurewise_center = False,  # set input mean to 0 over the dataset
+    samplewise_center = False,  # set each sample mean to 0
+    featurewise_std_normalization = False,  # divide inputs by std of the dataset
+    samplewise_std_normalization = False,  # divide each input by its std
+    zca_whitening = False,  # apply ZCA whitening
+    rotation_range = 0,  # randomly rotate images in the range (degrees, 0 to 180)
+    width_shift_range = 0.1,  # randomly shift images horizontally (fraction of total width)
+    height_shift_range = 0.1,  # randomly shift images vertically (fraction of total height)
+    horizontal_flip = True,  # randomly flip images
+    vertical_flip = False  # randomly flip images
+)
 
 # generator.fit(x_train_p)
 #
-# classifier_p.fit_generator(generator.flow(x_train_p, y_train_p, batch_size = 32),
-#                            epochs = 100,
-#                            verbose = 1,
-#                            steps_per_epoch = x_train_p.shape[0] // 32,
-#                            validation_steps = 10,
-#                            validation_data = (x_test_p, y_test_p))
+classifier_p.fit_generator(generator.flow(x_train_p, y_train_p, batch_size = 32),
+                           epochs = 100,
+                           verbose = 1,
+                           steps_per_epoch = x_train_p.shape[0] // 32,
+                           validation_steps = 10,
+                           validation_data = (x_test_p, y_test_p))
 
-# generator.fit(x_train)
-
-# classifier.fit_generator(generator.flow(x_train, y_train, batch_size = 32),
-#                          epochs = 100,
-#                          verbose = 1,
-#                          steps_per_epoch = x_train.shape[0] // 32,
-#                          validation_steps = 10,
-#                          validation_data = (x_test, y_test))
+generator.fit(x_train)
 
 classifier_p.fit(x_train_p, y_train_p, batch_size = 128, epochs = 50, shuffle = True, verbose = True, validation_data = (x_test_p, y_test_p))
+
+
+classifier.fit_generator(generator.flow(x_train, y_train, batch_size = 32),
+                         epochs = 200,
+                         verbose = 1,
+                         steps_per_epoch = x_train.shape[0] // 32,
+                         validation_steps = 10,
+                         validation_data = (x_test, y_test))
+
 
 classifier.fit(x, y, batch_size = 32, validation_split = 0.1, epochs = 500, shuffle = True, verbose = True)
 
