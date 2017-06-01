@@ -14,6 +14,7 @@ from keras.layers.convolutional import (
     AveragePooling2D
 )
 from keras.layers.merge import add
+from keras.layers import Concatenate
 from keras.layers.normalization import BatchNormalization
 from keras.regularizers import l2
 from keras import backend as K
@@ -232,9 +233,6 @@ class ResnetBuilder(object):
                                  strides = (1, 1))(block)
         flatten1 = Flatten()(pool2)
 
-        flatten1 = Dense(units = 512, kernel_initializer = "he_normal", kernel_regularizer = l2(regularizer_rate),
-                         activation = "relu")(flatten1)
-
         # flatten1 = SpatialPyramidPooling([1, 2])(pool2)
 
         if enhanced:
@@ -243,15 +241,23 @@ class ResnetBuilder(object):
 
             model1 = Model(inputs = input, outputs = dense)
 
-            dense = Dense(units = 10, kernel_initializer = "he_normal", kernel_regularizer = l2(regularizer_rate),
-                          activation = "softmax")(flatten1)
+            input2 = Input(shape = (100, ))
 
-            model2 = Model(inputs = input, outputs = dense)
+            dense = Concatenate((input2, flatten1))
+
+            dense = Dense(units = 10, kernel_initializer = "he_normal", kernel_regularizer = l2(regularizer_rate),
+                          activation = "softmax")(dense)
+
+            model2 = Model(inputs = (input, input2), outputs = dense)
 
             return model1, model2
         else:
-            dense = Dense(units = num_outputs, kernel_initializer = "he_normal", kernel_regularizer = l2(regularizer_rate),
-                          activation = "softmax")(flatten1)
+            input2 = Input(shape = (100,))
+
+            dense = Concatenate((input2, flatten1))
+
+            dense = Dense(units = 10, kernel_initializer = "he_normal", kernel_regularizer = l2(regularizer_rate),
+                          activation = "softmax")(dense)
 
             model = Model(inputs = input, outputs = dense)
             return model

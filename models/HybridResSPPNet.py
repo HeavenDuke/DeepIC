@@ -37,7 +37,7 @@ def EnhancedHybridResSppNet(class_num, enhanced_class_num):
     model2 = Model(_input, model2)
     model2.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 1e-4, decay = 1e-6), metrics = ['accuracy'])
 
-    input2 = Input(shape = (128 * 150))
+    input2 = Input(shape = (100, ))
 
     model3 = Concatenate((input2, model))
     model3 = Dense(units = class_num)(model3)
