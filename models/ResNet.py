@@ -21,7 +21,7 @@ from keras import backend as K
 from layers.SpatialPyramidPooling import SpatialPyramidPooling
 
 
-regularizer_rate = 1e-4
+regularizer_rate = 0.01
 
 def _bn_relu(input):
     """Helper to build a BN -> relu block
