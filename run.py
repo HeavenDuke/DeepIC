@@ -24,7 +24,7 @@ x, y = x + x_extra, np.concatenate((y, y_extra))
 
 # x_sift = extractSIFT(x)
 
-x = np.asarray([np.reshape(cv2.resize(item, (128, 128)), newshape = (128, 128, 1)) for item in x])
+x = np.asarray([np.reshape(cv2.resize(item, (128, 128)), newshape = (128, 128, 3)) for item in x])
 
 x, y = x.astype(np.float32), y.astype(np.float32)
 
@@ -56,7 +56,7 @@ print "finish loading data"
 
 from keras.optimizers import SGD, RMSprop
 
-classifier, classifier_p = ResnetBuilder.build_resnet_34(input_shape = (1, 128, 128), num_outputs = 12, enhanced = True)
+classifier, classifier_p = ResnetBuilder.build_resnet_34(input_shape = (3, 128, 128), num_outputs = 12, enhanced = True)
 classifier_p.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 1e-3, decay = 1e-3), metrics = ['accuracy'])
 classifier.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 5e-4, decay = 1e-3), metrics = ['accuracy'])
 
@@ -93,7 +93,7 @@ classifier.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 5
 
 # classifier_p.fit(x_train_p, y_train_p, batch_size = 128, validation_split = 0.1, epochs = 100, shuffle = True, verbose = True)
 
-# classifier_p.fit(x_train_p, y_train_p, batch_size = 128, validation_data = (x_test_p, y_test_p), epochs = 100, shuffle = True, verbose = True)
+classifier_p.fit(x_train_p, y_train_p, batch_size = 128, validation_data = (x_test_p, y_test_p), epochs = 100, shuffle = True, verbose = True)
 
 classifier.fit(x, y, batch_size = 32, validation_split = 0.1, epochs = 200, shuffle = True, verbose = True)
 
