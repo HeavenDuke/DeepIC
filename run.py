@@ -79,7 +79,7 @@ classifier_p.fit_generator(generator.flow(x_train_p, y_train_p, batch_size = 128
                            epochs = 100,
                            verbose = 1,
                            steps_per_epoch = x_train_p.shape[0] // 128,
-                           validation_steps = 10,
+                           validation_steps = 1,
                            validation_data = (x_test_p, y_test_p))
 
 # generator.fit(x_train)
@@ -91,6 +91,7 @@ classifier_p.fit_generator(generator.flow(x_train_p, y_train_p, batch_size = 128
 #                          validation_steps = 10,
 #                          validation_data = (x_test, y_test))
 
+# classifier_p.fit(x_train_p, y_train_p, batch_size = 128, validation_split = 0.1, epochs = 100, shuffle = True, verbose = True)
 
 classifier.fit(x, y, batch_size = 32, validation_split = 0.1, epochs = 100, shuffle = True, verbose = True)
 
