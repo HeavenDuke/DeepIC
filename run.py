@@ -93,13 +93,13 @@ classifier.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 5
 
 # classifier_p.fit(x_train_p, y_train_p, batch_size = 128, validation_split = 0.1, epochs = 100, shuffle = True, verbose = True)
 
-classifier_p.fit(x_train_p, y_train_p, batch_size = 128, validation_data = (x_test_p, y_test_p), epochs = 100, shuffle = True, verbose = True)
+# classifier_p.fit(x_train_p, y_train_p, batch_size = 128, validation_data = (x_test_p, y_test_p), epochs = 100, shuffle = True, verbose = True)
 
 classifier.fit(x, y, batch_size = 32, validation_split = 0.1, epochs = 200, shuffle = True, verbose = True)
 
-KFold = StratifiedKFold(n_splits = 10)
+# KFold = StratifiedKFold(n_splits = 10)
 
-print cross_val_score(classifier, x, y, cv = KFold)
+# print cross_val_score(classifier, x, y, cv = KFold)
 
 # classifier_e.fit([x_train, x_train_sift], y_train, batch_size = 32, epochs = 100, validation_split = 0.1, verbose = True)
 
