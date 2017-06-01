@@ -7,7 +7,6 @@ from utils.preprocessor import shuffle, extractSIFT, resizeImages
 from keras.preprocessing.image import ImageDataGenerator
 from models.ResSppNet import EnhancedResSppNet
 from models.NaiveSPPNet import EnhancedNaiveSPPNet
-from models.ImageNetResNet import EnhancedImageNetResNset
 from sklearn.model_selection import StratifiedKFold, cross_val_score
 from models.ResNet import ResnetBuilder
 import numpy as np
@@ -57,10 +56,8 @@ print "finish loading data"
 
 from keras.optimizers import SGD, RMSprop
 
-classifier = EnhancedImageNetResNset(class_num = 12)
-
-# classifier, classifier_p = ResnetBuilder.build_resnet_34(input_shape = (3, 128, 128), num_outputs = 12, enhanced = True)
-# classifier_p.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 1e-3, decay = 1e-3), metrics = ['accuracy'])
+classifier, classifier_p = ResnetBuilder.build_resnet_34(input_shape = (3, 128, 128), num_outputs = 12, enhanced = True)
+classifier_p.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 1e-3, decay = 1e-3), metrics = ['accuracy'])
 classifier.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 5e-4, decay = 0.05), metrics = ['accuracy'])
 
 # generator = ImageDataGenerator(
@@ -96,13 +93,13 @@ classifier.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 5
 
 # classifier_p.fit(x_train_p, y_train_p, batch_size = 128, validation_split = 0.1, epochs = 100, shuffle = True, verbose = True)
 
-# classifier_p.fit(x_train_p, y_train_p, batch_size = 128, validation_data = (x_test_p, y_test_p), epochs = 100, shuffle = True, verbose = True)
+classifier_p.fit(x_train_p, y_train_p, batch_size = 128, validation_data = (x_test_p, y_test_p), epochs = 100, shuffle = True, verbose = True)
 
 classifier.fit(x, y, batch_size = 32, validation_split = 0.1, epochs = 100, shuffle = True, verbose = True)
 
-# KFold = StratifiedKFold(n_splits = 10)
-#
-# print cross_val_score(classifier, x, y, cv = KFold)
+KFold = StratifiedKFold(n_splits = 10)
+
+print cross_val_score(classifier, x, y, cv = KFold)
 
 # classifier_e.fit([x_train, x_train_sift], y_train, batch_size = 32, epochs = 100, validation_split = 0.1, verbose = True)
 
