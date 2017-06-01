@@ -58,7 +58,7 @@ from keras.optimizers import SGD, RMSprop
 
 classifier, classifier_p = ResnetBuilder.build_resnet_34(input_shape = (3, 128, 128), num_outputs = 12, enhanced = True)
 classifier_p.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 1e-3, decay = 1e-3), metrics = ['accuracy'])
-classifier.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 5e-4, decay = 0.05), metrics = ['accuracy'])
+classifier.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 5e-4, decay = 1e-3), metrics = ['accuracy'])
 
 # generator = ImageDataGenerator(
 #     featurewise_center = False,  # set input mean to 0 over the dataset
