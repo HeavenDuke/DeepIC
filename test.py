@@ -1,12 +1,18 @@
-import cv2
 import numpy as np
 
+from utils.loader import construct_input_data
+from utils.preprocessor import extractSIFT
 
+validation_split = 0.8
 
+class_num = 12
+enhanced_class_num = 10
 
-i1 = cv2.imread("./data/train/image/1.jpg", cv2.IMREAD_COLOR)
-i2 = cv2.imread("./data/train/mask/1.png", cv2.IMREAD_GRAYSCALE)
+x, y = construct_input_data('./data/train', with_masks = False)
+x_extra, y_extra = construct_input_data('./data/extra', with_masks = False)
 
-cv2.imshow("image", removeBackground(i1, i2))
-cv2.waitKey()
-cv2.destroyAllWindows()
+x, y = x + x_extra, np.concatenate((y, y_extra))
+
+x_sift = extractSIFT(x)
+
+print x_sift
