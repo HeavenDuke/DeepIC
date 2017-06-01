@@ -22,7 +22,7 @@ x_extra, y_extra = construct_input_data('./data/extra', with_masks = False)
 
 x, y = x + x_extra, np.concatenate((y, y_extra))
 
-x_sift = extractSIFT(x)
+# x_sift = extractSIFT(x)
 
 x = np.asarray([np.reshape(cv2.resize(item, (128, 128)), newshape = (128, 128, 3)) for item in x])
 
@@ -30,7 +30,7 @@ x, y = x.astype(np.float32), y.astype(np.float32)
 
 x /= 255.
 
-x, y, x_sift = shuffle(x, y, x_sift)
+x, y, x_sift = shuffle(x, y, None)# x_sift)
 
 # x_train, x_train_sift, y_train = x[:int(x.shape[0] * validation_split)], x_sift[:int(x.shape[0] * validation_split)], y[:int(x.shape[0] * validation_split)]
 # x_test, x_test_sift, y_test = x[int(x.shape[0] * validation_split):], x_sift[int(x.shape[0] * validation_split):], y[int(x.shape[0] * validation_split):]
@@ -58,7 +58,7 @@ from keras.optimizers import SGD, RMSprop
 
 classifier, classifier_p = ResnetBuilder.build_resnet_34(input_shape = (3, 128, 128), num_outputs = 12, enhanced = True)
 # classifier_p.compile(loss = "categorical_crossentropy", optimizer = SGD(lr = 1e-3, decay = 1e-3), metrics = ['accuracy'])
-classifier.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 5e-4, decay = 0.1), metrics = ['accuracy'])
+classifier.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 5e-4, decay = 0.05), metrics = ['accuracy'])
 
 # generator = ImageDataGenerator(
 #     featurewise_center = False,  # set input mean to 0 over the dataset
@@ -92,7 +92,7 @@ classifier.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 5
 #                          validation_data = (x_test, y_test))
 
 
-classifier.fit((x, x_sift), y, batch_size = 32, validation_split = 0.1, epochs = 100, shuffle = True, verbose = True)
+classifier.fit(x, y, batch_size = 32, validation_split = 0.1, epochs = 100, shuffle = True, verbose = True)
 
 # KFold = StratifiedKFold(n_splits = 10)
 #
