@@ -7,6 +7,7 @@ from utils.preprocessor import shuffle, extractSIFT, resizeImages
 from keras.preprocessing.image import ImageDataGenerator
 from models.ResSppNet import EnhancedResSppNet
 from models.NaiveSPPNet import EnhancedNaiveSPPNet
+from sklearn.model_selection import StratifiedKFold, cross_val_score
 from models.ResNet import ResnetBuilder
 import numpy as np
 import cv2
@@ -16,8 +17,8 @@ validation_split = 0.8
 class_num = 12
 enhanced_class_num = 10
 
-x, y = construct_input_data('./data/train', with_masks = True)
-x_extra, y_extra = construct_input_data('./data/extra', with_masks = True)
+x, y = construct_input_data('./data/train', with_masks = False)
+x_extra, y_extra = construct_input_data('./data/extra', with_masks = False)
 
 x, y = x + x_extra, np.concatenate((y, y_extra))
 
@@ -57,7 +58,7 @@ from keras.optimizers import SGD, RMSprop
 
 classifier, classifier_p = ResnetBuilder.build_resnet_34(input_shape = (3, 128, 128), num_outputs = 12, enhanced = True)
 # classifier_p.compile(loss = "categorical_crossentropy", optimizer = SGD(lr = 1e-3, decay = 1e-3), metrics = ['accuracy'])
-classifier.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 1e-4, decay = 0.01), metrics = ['accuracy'])
+classifier.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 5e-4, decay = 1e-3), metrics = ['accuracy'])
 
 # generator = ImageDataGenerator(
 #     featurewise_center = False,  # set input mean to 0 over the dataset
@@ -91,7 +92,11 @@ classifier.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 1
 #                          validation_data = (x_test, y_test))
 
 
-classifier.fit(x, y, batch_size = 32, validation_split = 0.1, epochs = 500, shuffle = True, verbose = True)
+classifier.fit(x, y, batch_size = 32, validation_split = 0.1, epochs = 100, shuffle = True, verbose = True)
+
+KFold = StratifiedKFold(n_splits = 10)
+
+print cross_val_score(classifier, x, y, cv = KFold)
 
 # classifier_e.fit([x_train, x_train_sift], y_train, batch_size = 32, epochs = 100, validation_split = 0.1, verbose = True)
 
