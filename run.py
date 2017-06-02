@@ -30,7 +30,7 @@ x, y = x.astype(np.float32), y.astype(np.float32)
 
 x /= 255.
 
-x, y, x_sift = shuffle(x, y, None)# x_sift)
+# x, y, x_sift = shuffle(x, y, None)# x_sift)
 
 # x_train, x_train_sift, y_train = x[:int(x.shape[0] * validation_split)], x_sift[:int(x.shape[0] * validation_split)], y[:int(x.shape[0] * validation_split)]
 # x_test, x_test_sift, y_test = x[int(x.shape[0] * validation_split):], x_sift[int(x.shape[0] * validation_split):], y[int(x.shape[0] * validation_split):]
@@ -58,7 +58,7 @@ from keras.optimizers import SGD, RMSprop
 
 classifier, classifier_p = ResnetBuilder.build_resnet_34(input_shape = (3, 128, 128), num_outputs = 12, enhanced = True)
 classifier_p.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 1e-3, decay = 1e-3), metrics = ['accuracy'])
-classifier.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 5e-4, decay = 1e-3), metrics = ['accuracy'])
+classifier.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 1e-5, decay = 1e-3), metrics = ['accuracy'])
 
 # generator = ImageDataGenerator(
 #     featurewise_center = False,  # set input mean to 0 over the dataset
