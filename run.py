@@ -3,7 +3,7 @@ from keras.optimizers import RMSprop, Adam
 from utils.loader import construct_input_data
 from keras.datasets import cifar10
 from keras.utils.np_utils import to_categorical
-from utils.preprocessor import shuffle, extractSIFT, resizeImages
+from utils.preprocessor import shuffle, extractSIFT, resizeImages, group_data_by_label
 from keras.preprocessing.image import ImageDataGenerator
 from models.ResSppNet import EnhancedResSppNet
 from models.NaiveSPPNet import EnhancedNaiveSPPNet
@@ -99,7 +99,10 @@ classifier.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 5
 
 classifier.fit(x_train, y_train, batch_size = 32, validation_data = (x_test, y_test), epochs = 200, shuffle = True, verbose = True)
 
+table = group_data_by_label(x_test, y_test)
 
+for key in table:
+    print key, classifier.evaluate(table[key]["images"], table[key]["labels"])
 
 
 # KFold = StratifiedKFold(n_splits = 10)

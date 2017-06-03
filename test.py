@@ -19,8 +19,4 @@ x, y = x.astype(np.float32), y.astype(np.float32)
 
 x /= 255.
 
-table = group_data_by_label(x, y)
 
-for key in table:
-    print table[key]["labels"].shape
-    print table[key]["images"].shape
