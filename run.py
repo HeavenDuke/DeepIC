@@ -97,7 +97,7 @@ classifier.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 5
 
 # classifier.fit(x, y, batch_size = 32, validation_split = 0.1, epochs = 200, shuffle = True, verbose = True)
 
-classifier.fit(x_train, y_train, batch_size = 32, validation_data = (x_test, y_test), epochs = 200, shuffle = True, verbose = True)
+classifier.fit(x_train, y_train, batch_size = 32, validation_data = (x_test, y_test), epochs = 1, shuffle = True, verbose = True)
 
 table = group_data_by_label(x_test, y_test)
 
