@@ -117,3 +117,17 @@ def shuffle(image, label, features = None):
             table.append([_images[i], _labels[i]])
         random.shuffle(table)
         return np.asarray([item[0] for item in table]), np.asarray([item[1] for item in table]), None
+
+
+def group_data_by_label(images, labels):
+    _images = images.tolist()
+    tables = {}
+    for i in range(labels.shape[0]):
+        if np.argmax(labels[i]) not in tables:
+            tables[np.argmax(labels[i])] = {"labels": [], "images": []}
+        tables[np.argmax(labels[i])]["images"].append(_images[i])
+        tables[np.argmax(labels[i])]["labels"].append(labels[i])
+    for key in tables:
+        tables[key]["labels"] = np.asarray(tables[key]["labels"])
+        tables[key]["images"] = np.asarray(tables[key]["images"])
+    return tables

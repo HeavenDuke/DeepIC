@@ -1,7 +1,7 @@
 import numpy as np
 
 from utils.loader import construct_input_data
-from utils.preprocessor import extractSIFT
+from utils.preprocessor import group_data_by_label
 
 validation_split = 0.8
 
@@ -13,6 +13,4 @@ x_extra, y_extra = construct_input_data('./data/extra', with_masks = False)
 
 x, y = x + x_extra, np.concatenate((y, y_extra))
 
-x_sift = extractSIFT(x)
-
-print x_sift
+print group_data_by_label(x, y)
