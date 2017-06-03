@@ -93,3 +93,4 @@ ENV/
 
 # Data Directory
 data
+log
