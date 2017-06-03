@@ -29,7 +29,7 @@ def extractSIFT(images, n_clusters = 100):
     return normalize(_map[2], axis = 1)
 
 
-def removeBackground(img1, img2):
+def removeBackground(img1, img2, remain = False):
     ret, mask = cv2.threshold(img2, 10, 255, cv2.THRESH_BINARY)
     margin_x, margin_y = np.sum(mask, axis = 0), np.sum(mask, axis = 1)
     left, right, top, bottom = -1, -1, -1, -1
@@ -49,8 +49,10 @@ def removeBackground(img1, img2):
         if margin_y[margin_y.shape[0] - i - 1] > 0:
             bottom = margin_y.shape[0] - i - 1
             break
-    # img1_bg = img1
-    img1_bg = cv2.bitwise_and(img1, img1, mask = mask)
+    if not remain:
+        img1_bg = cv2.bitwise_and(img1, img1, mask = mask)
+    else:
+        img1_bg = img1
     return img1_bg[top:bottom, left:right]
 
 

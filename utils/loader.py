@@ -4,7 +4,7 @@ import numpy as np
 from preprocessor import removeBackground
 
 
-def construct_input_data(path, with_masks = True, with_label = True):
+def construct_input_data(path, with_masks = True, with_label = True, remain = False):
 
     def vectorize(index):
         result = [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.]
@@ -16,7 +16,7 @@ def construct_input_data(path, with_masks = True, with_label = True):
 
     if with_masks:
         mask_files = [cv2.imread(path + "/mask/" + str(f) + ".png", cv2.IMREAD_GRAYSCALE) for f in image_ids]
-        image_files = [removeBackground(image_files[index], mask_files[index]) for index in range(len(mask_files))]
+        image_files = [removeBackground(image_files[index], mask_files[index], remain = remain) for index in range(len(mask_files))]
 
     if with_label:
         label_file = open(path + '/label.label', 'r')
