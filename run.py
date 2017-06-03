@@ -12,7 +12,7 @@ from models.ResNet import ResnetBuilder
 import numpy as np
 import cv2
 
-validation_split = 0.8
+validation_split = 0.9
 
 class_num = 12
 enhanced_class_num = 10

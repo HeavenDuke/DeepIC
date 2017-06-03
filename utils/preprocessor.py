@@ -125,7 +125,7 @@ def group_data_by_label(images, labels):
     for i in range(labels.shape[0]):
         if np.argmax(labels[i]) not in table:
             table[np.argmax(labels[i])] = {"labels": [], "images": []}
-            table[np.argmax(labels[i])]["images"].append(_images[i])
+        table[np.argmax(labels[i])]["images"].append(_images[i])
         table[np.argmax(labels[i])]["labels"].append(labels[i])
     for key in table:
         table[key]["labels"] = np.asarray(table[key]["labels"])
