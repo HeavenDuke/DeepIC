@@ -22,11 +22,11 @@ x_extra, y_extra = construct_input_data('./data/extra', with_masks = False)
 
 x, y = x + x_extra, np.concatenate((y, y_extra))
 
-x_sift = np.random.random(size = (x.shape[0], 100))
-
 # x_sift = extractSIFT(x, n_clusters = 100)
 
 x = np.asarray([np.reshape(cv2.resize(item, (128, 128)), newshape = (128, 128, 3)) for item in x])
+
+x_sift = np.random.random(size = (x.shape[0], 100))
 
 x, y = x.astype(np.float32), y.astype(np.float32)
 
