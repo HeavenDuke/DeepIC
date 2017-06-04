@@ -32,7 +32,7 @@ x_sift = np.random.random(size = (x.shape[0], 100))
 
 # x, y = x.astype(np.float32), y.astype(np.float32)
 
-x /= 255.
+# x /= 255.
 
 # x, y, x_sift = shuffle(x, y, x_sift)
 
@@ -103,7 +103,10 @@ classifier.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 5
 
 # classifier.fit(x_train, y_train, batch_size = 32, validation_data = (x_test, y_test), epochs = 200, shuffle = True, verbose = True)
 
-classifier.fit((x_train, x_train_sift), y_train, batch_size = 32, validation_data = ((x_test, x_test_sift), y_test), epochs = 200, shuffle = True, verbose = True)
+print x_train.shape, x_train_sift.shape, y_train.shape
+print x_test.shape, x_test_sift.shape, y_test.shape
+
+classifier.fit(x = (x_train, x_train_sift), y = y_train, batch_size = 32, validation_data = ((x_test, x_test_sift), y_test), epochs = 200, shuffle = True, verbose = True)
 
 # table = group_data_by_label(x_test, y_test)
 #
