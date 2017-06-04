@@ -27,4 +27,8 @@
 from sklearn.cluster import k_means
 import numpy as np
 n_clusters = 100
-print k_means(np.random.randint(0, 100, size = (10000, 25)), n_clusters = n_clusters, verbose = True, max_iter = 1, n_init = 1)
+centroid, labels, loss = k_means(np.random.randint(0, 100, size = (10000, 25)), n_clusters = n_clusters, verbose = True, max_iter = 1, n_init = 1)
+
+print centroid.shape
+print labels.shape
+print loss
