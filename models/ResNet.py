@@ -14,7 +14,7 @@ from keras.layers.convolutional import (
     AveragePooling2D
 )
 from keras.layers.merge import add
-from keras.layers import Concatenate
+from keras.layers import concatenate
 from keras.layers.normalization import BatchNormalization
 from keras.regularizers import l2
 from keras import backend as K
@@ -243,7 +243,7 @@ class ResnetBuilder(object):
 
             input2 = Input(shape = (100, ))
 
-            dense = Concatenate((input2, flatten1), axis = 1)
+            dense = concatenate((input2, flatten1))
 
             dense = Dense(units = 10, kernel_initializer = "he_normal", kernel_regularizer = l2(regularizer_rate),
                           activation = "softmax")(dense)
@@ -255,7 +255,7 @@ class ResnetBuilder(object):
 
             input2 = Input(shape = (100,))
 
-            dense = Concatenate((input2, flatten1), axis = 1)
+            dense = concatenate((input2, flatten1))
 
             dense = Dense(units = 10, kernel_initializer = "he_normal", kernel_regularizer = l2(regularizer_rate),
                           activation = "softmax")(dense)
