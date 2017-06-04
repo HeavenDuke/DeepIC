@@ -23,7 +23,7 @@ def extractSIFT(images, n_clusters = 100):
         cnt += 1
     _map[0] = normalize(np.asarray(_map[0]), norm = "l1", axis = 0)
     print _map[0].shape
-    centroid, labels, loss = k_means(_map[0], n_clusters = n_clusters, verbose = True, max_iter = 1, n_init = 1)
+    centroid, labels, loss = k_means(_map[0], n_clusters = n_clusters, verbose = True, max_iter = 30, n_init = 3)
     print "finish clustering"
     for index in range(labels.shape[0]):
         _map[2][_map[1][index], labels[index]] += 1
