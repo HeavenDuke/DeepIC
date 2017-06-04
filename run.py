@@ -93,7 +93,7 @@ generator = ImageDataGenerator(
 generator.fit(x_train)
 
 classifier.fit_generator(generator.flow(x_train, y_train, batch_size = 32),
-                         epochs = 200,
+                         epochs = 500,
                          verbose = 1,
                          steps_per_epoch = x_train.shape[0] // 32,
                          validation_steps = 10,
