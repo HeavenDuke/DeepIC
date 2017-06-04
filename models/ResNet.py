@@ -243,6 +243,9 @@ class ResnetBuilder(object):
 
             input2 = Input(shape = (100, ))
 
+            print input2.get_shape()
+            print flatten1.get_shape()
+
             dense = concatenate((input2, flatten1))
 
             dense = Dense(units = 10, kernel_initializer = "he_normal", kernel_regularizer = l2(regularizer_rate),
