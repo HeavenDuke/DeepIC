@@ -189,7 +189,7 @@ def _get_block(identifier):
 
 class ResnetBuilder(object):
     @staticmethod
-    def build(input_shape, num_outputs, block_fn, repetitions, enhanced = False):
+    def build(input_shape, num_outputs, block_fn, repetitions, enhanced = False, withSift = False):
         """Builds a custom ResNet like architecture.
 
         Args:
@@ -241,43 +241,44 @@ class ResnetBuilder(object):
 
             model1 = Model(inputs = input, outputs = dense)
 
-            # input2 = Input(shape = (100, ))
-            #
-            # dense = Concatenate((input2, flatten1))
+            input2 = Input(shape = (100, ))
+
+            dense = Concatenate((input2, flatten1))
 
             dense = Dense(units = 10, kernel_initializer = "he_normal", kernel_regularizer = l2(regularizer_rate),
-                          activation = "softmax")(flatten1)
+                          activation = "softmax")(dense)
 
-            model2 = Model(inputs = input, outputs = dense)
+            model2 = Model(inputs = (input, input2), outputs = dense)
 
             return model1, model2
         else:
-            # input2 = Input(shape = (100,))
-            #
-            # dense = Concatenate((input2, flatten1))
+
+            input2 = Input(shape = (100,))
+
+            dense = Concatenate((input2, flatten1))
 
             dense = Dense(units = 10, kernel_initializer = "he_normal", kernel_regularizer = l2(regularizer_rate),
-                          activation = "softmax")(flatten1)
+                          activation = "softmax")(dense)
 
-            model = Model(inputs = input, outputs = dense)
+            model = Model(inputs = (input, input2), outputs = dense)
             return model
 
     @staticmethod
-    def build_resnet_18(input_shape, num_outputs, enhanced = False):
-        return ResnetBuilder.build(input_shape, num_outputs, basic_block, [2, 2, 2, 2], enhanced)
+    def build_resnet_18(input_shape, num_outputs, enhanced = False, withSift = False):
+        return ResnetBuilder.build(input_shape, num_outputs, basic_block, [2, 2, 2, 2], enhanced, withSift)
 
     @staticmethod
-    def build_resnet_34(input_shape, num_outputs, enhanced = False):
-        return ResnetBuilder.build(input_shape, num_outputs, basic_block, [3, 4, 6, 3], enhanced)
+    def build_resnet_34(input_shape, num_outputs, enhanced = False, withSift = False):
+        return ResnetBuilder.build(input_shape, num_outputs, basic_block, [3, 4, 6, 3], enhanced, withSift)
 
     @staticmethod
-    def build_resnet_50(input_shape, num_outputs, enhanced = False):
-        return ResnetBuilder.build(input_shape, num_outputs, bottleneck, [3, 4, 6, 3], enhanced)
+    def build_resnet_50(input_shape, num_outputs, enhanced = False, withSift = False):
+        return ResnetBuilder.build(input_shape, num_outputs, bottleneck, [3, 4, 6, 3], enhanced, withSift)
 
     @staticmethod
-    def build_resnet_101(input_shape, num_outputs, enhanced = False):
-        return ResnetBuilder.build(input_shape, num_outputs, bottleneck, [3, 4, 23, 3], enhanced)
+    def build_resnet_101(input_shape, num_outputs, enhanced = False, withSift = False):
+        return ResnetBuilder.build(input_shape, num_outputs, bottleneck, [3, 4, 23, 3], enhanced, withSift)
 
     @staticmethod
-    def build_resnet_152(input_shape, num_outputs, enhanced = False):
-        return ResnetBuilder.build(input_shape, num_outputs, bottleneck, [3, 8, 36, 3], enhanced)
+    def build_resnet_152(input_shape, num_outputs, enhanced = False, withSift = False):
+        return ResnetBuilder.build(input_shape, num_outputs, bottleneck, [3, 8, 36, 3], enhanced, withSift)

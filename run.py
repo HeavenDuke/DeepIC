@@ -22,7 +22,7 @@ x_extra, y_extra = construct_input_data('./data/extra', with_masks = False)
 
 x, y = x + x_extra, np.concatenate((y, y_extra))
 
-# x_sift = extractSIFT(x)
+x_sift = extractSIFT(x)
 
 x = np.asarray([np.reshape(cv2.resize(item, (128, 128)), newshape = (128, 128, 3)) for item in x])
 
@@ -97,12 +97,14 @@ classifier.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 5
 
 # classifier.fit(x, y, batch_size = 32, validation_split = 0.1, epochs = 200, shuffle = True, verbose = True)
 
-classifier.fit(x_train, y_train, batch_size = 32, validation_data = (x_test, y_test), epochs = 200, shuffle = True, verbose = True)
+# classifier.fit(x_train, y_train, batch_size = 32, validation_data = (x_test, y_test), epochs = 200, shuffle = True, verbose = True)
 
-table = group_data_by_label(x_test, y_test)
+classifier.fit()
 
-for key in table:
-    print "accuracy for class: %d is %.4f" % (key, classifier.evaluate(table[key]["images"], table[key]["labels"])[1])
+# table = group_data_by_label(x_test, y_test)
+#
+# for key in table:
+#     print "accuracy for class: %d is %.4f" % (key, classifier.evaluate(table[key]["images"], table[key]["labels"])[1])
 
 
 # KFold = StratifiedKFold(n_splits = 10)
