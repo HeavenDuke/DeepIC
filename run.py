@@ -17,22 +17,24 @@ validation_split = 0.9
 class_num = 12
 enhanced_class_num = 10
 
-x, y = construct_input_data('./data/train', with_masks = False)
-x_extra, y_extra = construct_input_data('./data/extra', with_masks = False)
-
-x, y = x + x_extra, np.concatenate((y, y_extra))
+# x, y = construct_input_data('./data/train', with_masks = False)
+# x_extra, y_extra = construct_input_data('./data/extra', with_masks = False)
+#
+# x, y = x + x_extra, np.concatenate((y, y_extra))
 
 # x_sift = extractSIFT(x, n_clusters = 100)
 
-x = np.asarray([np.reshape(cv2.resize(item, (128, 128)), newshape = (128, 128, 3)) for item in x])
+# x = np.asarray([np.reshape(cv2.resize(item, (128, 128)), newshape = (128, 128, 3)) for item in x])
+
+x, y = np.random.random(size = (3000, 128, 128, 3)), np.random.random(size = (3000, 12))
 
 x_sift = np.random.random(size = (x.shape[0], 100))
 
-x, y = x.astype(np.float32), y.astype(np.float32)
+# x, y = x.astype(np.float32), y.astype(np.float32)
 
 x /= 255.
 
-x, y, x_sift = shuffle(x, y, x_sift)
+# x, y, x_sift = shuffle(x, y, x_sift)
 
 x_train, x_train_sift, y_train = x[:int(x.shape[0] * validation_split)], x_sift[:int(x.shape[0] * validation_split)], y[:int(x.shape[0] * validation_split)]
 x_test, x_test_sift, y_test = x[int(x.shape[0] * validation_split):], x_sift[int(x.shape[0] * validation_split):], y[int(x.shape[0] * validation_split):]
@@ -40,15 +42,15 @@ x_test, x_test_sift, y_test = x[int(x.shape[0] * validation_split):], x_sift[int
 # x_train, y_train = x[:int(x.shape[0] * validation_split)], y[:int(x.shape[0] * validation_split)]
 # x_test, y_test = x[int(x.shape[0] * validation_split):], y[int(x.shape[0] * validation_split):]
 
-(x_train_p, y_train_p), (x_test_p, y_test_p) = cifar10.load_data()
-x_train_p, x_test_p = resizeImages(x_train_p, size = (128, 128)), resizeImages(x_test_p, size = (128, 128))
-y_train_p = to_categorical(y_train_p, 10)
-y_test_p = to_categorical(y_test_p, 10)
-#
-x_train_p = x_train_p.astype('float32')
-x_test_p = x_test_p.astype('float32')
-x_train_p /= 255.
-x_test_p /= 255.
+# (x_train_p, y_train_p), (x_test_p, y_test_p) = cifar10.load_data()
+# x_train_p, x_test_p = resizeImages(x_train_p, size = (128, 128)), resizeImages(x_test_p, size = (128, 128))
+# y_train_p = to_categorical(y_train_p, 10)
+# y_test_p = to_categorical(y_test_p, 10)
+# #
+# x_train_p = x_train_p.astype('float32')
+# x_test_p = x_test_p.astype('float32')
+# x_train_p /= 255.
+# x_test_p /= 255.
 
 print "finish loading data"
 
