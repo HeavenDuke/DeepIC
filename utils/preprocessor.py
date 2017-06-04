@@ -23,11 +23,11 @@ def extractSIFT(images, n_clusters = 100):
         cnt += 1
     _map[0] = normalize(np.asarray(_map[0]), norm = "l1", axis = 0)
     print _map[0].shape
-    print len(k_means(_map[0], n_clusters = n_clusters, verbose = True, max_iter = 1, n_init = 1))
-    # print "finish clustercating"
-    # for index in labels.shape[0]:
-    #     _map[2][_map[1][index], labels[index]] += 1
-    # return normalize(_map[2], axis = 1)
+    centroid, labels = k_means(_map[0], n_clusters = n_clusters, verbose = True, max_iter = 1, n_init = 1)
+    print "finish clustercating"
+    for index in labels.shape[0]:
+        _map[2][_map[1][index], labels[index]] += 1
+    return normalize(_map[2], axis = 1)
 
 
 def removeBackground(img1, img2):
