@@ -30,13 +30,13 @@ x, y = x.astype(np.float32), y.astype(np.float32)
 
 x /= 255.
 
-# x, y, x_sift = shuffle(x, y, None)# x_sift)
+x, y, x_sift = shuffle(x, y, x_sift)
 
-# x_train, x_train_sift, y_train = x[:int(x.shape[0] * validation_split)], x_sift[:int(x.shape[0] * validation_split)], y[:int(x.shape[0] * validation_split)]
-# x_test, x_test_sift, y_test = x[int(x.shape[0] * validation_split):], x_sift[int(x.shape[0] * validation_split):], y[int(x.shape[0] * validation_split):]
+x_train, x_train_sift, y_train = x[:int(x.shape[0] * validation_split)], x_sift[:int(x.shape[0] * validation_split)], y[:int(x.shape[0] * validation_split)]
+x_test, x_test_sift, y_test = x[int(x.shape[0] * validation_split):], x_sift[int(x.shape[0] * validation_split):], y[int(x.shape[0] * validation_split):]
 
-x_train, y_train = x[:int(x.shape[0] * validation_split)], y[:int(x.shape[0] * validation_split)]
-x_test, y_test = x[int(x.shape[0] * validation_split):], y[int(x.shape[0] * validation_split):]
+# x_train, y_train = x[:int(x.shape[0] * validation_split)], y[:int(x.shape[0] * validation_split)]
+# x_test, y_test = x[int(x.shape[0] * validation_split):], y[int(x.shape[0] * validation_split):]
 
 (x_train_p, y_train_p), (x_test_p, y_test_p) = cifar10.load_data()
 x_train_p, x_test_p = resizeImages(x_train_p, size = (128, 128)), resizeImages(x_test_p, size = (128, 128))
@@ -99,7 +99,7 @@ classifier.compile(loss = "categorical_crossentropy", optimizer = RMSprop(lr = 5
 
 # classifier.fit(x_train, y_train, batch_size = 32, validation_data = (x_test, y_test), epochs = 200, shuffle = True, verbose = True)
 
-classifier.fit()
+classifier.fit((x_train, x_train_sift), y_train, batch_size = 32, validation_data = ((x_test, x_test_sift), y_test), epochs = 200, shuffle = True, verbose = True)
 
 # table = group_data_by_label(x_test, y_test)
 #
