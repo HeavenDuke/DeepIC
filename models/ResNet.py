@@ -237,14 +237,20 @@ class ResnetBuilder(object):
 
         if enhanced:
 
-            input2 = Input(shape = (100,))
+            # input2 = Input(shape = (100,))
+            #
+            # dense = concatenate(inputs = [flatten1, input2])
+            #
+            # dense = Dense(units = num_outputs, kernel_initializer = "he_normal", kernel_regularizer = l2(regularizer_rate),
+            #               activation = "softmax")(dense)
 
-            dense = concatenate(inputs = [flatten1, input2])
+            dense = Dense(units = num_outputs, kernel_initializer = "he_normal",
+                          kernel_regularizer = l2(regularizer_rate),
+                          activation = "softmax")(flatten1)
 
-            dense = Dense(units = num_outputs, kernel_initializer = "he_normal", kernel_regularizer = l2(regularizer_rate),
-                          activation = "softmax")(dense)
+            # model1 = Model(inputs = [input, input2], outputs = dense)
 
-            model1 = Model(inputs = [input, input2], outputs = dense)
+            model1 = Model(inputs = input, outputs = dense)
 
             dense = Dense(units = 10, kernel_initializer = "he_normal", kernel_regularizer = l2(regularizer_rate),
                           activation = "softmax")(flatten1)
@@ -254,15 +260,22 @@ class ResnetBuilder(object):
             return model1, model2
         else:
 
-            input2 = Input(shape = (100,))
-
-            dense = concatenate(inputs = [flatten1, input2])
+            # input2 = Input(shape = (100,))
+            #
+            # dense = concatenate(inputs = [flatten1, input2])
+            #
+            # dense = Dense(units = num_outputs, kernel_initializer = "he_normal",
+            #               kernel_regularizer = l2(regularizer_rate),
+            #               activation = "softmax")(dense)
 
             dense = Dense(units = num_outputs, kernel_initializer = "he_normal",
                           kernel_regularizer = l2(regularizer_rate),
-                          activation = "softmax")(dense)
+                          activation = "softmax")(flatten1)
 
-            model = Model(inputs = (input, input2), outputs = dense)
+            # model = Model(inputs = [input, input2], outputs = dense)
+
+            model = Model(inputs = input, outputs = dense)
+
             return model
 
     @staticmethod
