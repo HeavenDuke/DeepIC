@@ -1,8 +1,7 @@
 import numpy as np
-import cv2
+
 from utils.loader import construct_input_data
 from utils.preprocessor import extractSIFT
-from utils.preprocessor import group_data_by_label
 
 validation_split = 0.8
 
