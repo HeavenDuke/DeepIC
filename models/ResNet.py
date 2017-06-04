@@ -246,7 +246,7 @@ class ResnetBuilder(object):
             print input2.get_shape()
             print flatten1.get_shape()
 
-            dense = concatenate((input2, flatten1))
+            dense = concatenate(inputs = (input2, flatten1))
 
             dense = Dense(units = 10, kernel_initializer = "he_normal", kernel_regularizer = l2(regularizer_rate),
                           activation = "softmax")(dense)
@@ -258,9 +258,10 @@ class ResnetBuilder(object):
 
             input2 = Input(shape = (100,))
 
-            dense = concatenate((input2, flatten1))
+            dense = concatenate(inputs = (input2, flatten1))
 
-            dense = Dense(units = 10, kernel_initializer = "he_normal", kernel_regularizer = l2(regularizer_rate),
+            dense = Dense(units = num_outputs, kernel_initializer = "he_normal",
+                          kernel_regularizer = l2(regularizer_rate),
                           activation = "softmax")(dense)
 
             model = Model(inputs = (input, input2), outputs = dense)
