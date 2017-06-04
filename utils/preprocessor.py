@@ -50,8 +50,8 @@ def removeBackground(img1, img2):
         if margin_y[margin_y.shape[0] - i - 1] > 0:
             bottom = margin_y.shape[0] - i - 1
             break
-    # img1_bg = cv2.bitwise_and(img1, img1, mask = mask)
-    img1_bg = img1
+    img1_bg = cv2.bitwise_and(img1, img1, mask = mask)
+    # img1_bg = img1
     return img1_bg[top:bottom, left:right]
 
 
