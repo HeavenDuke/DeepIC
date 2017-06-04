@@ -236,22 +236,20 @@ class ResnetBuilder(object):
         # flatten1 = SpatialPyramidPooling([1, 2])(pool2)
 
         if enhanced:
-            dense = Dense(units = num_outputs, kernel_initializer = "he_normal", kernel_regularizer = l2(regularizer_rate),
-                          activation = "softmax")(flatten1)
 
-            model1 = Model(inputs = input, outputs = dense)
-
-            input2 = Input(shape = (100, ))
-
-            print input2.get_shape()
-            print flatten1.get_shape()
+            input2 = Input(shape = (100,))
 
             dense = concatenate(inputs = [flatten1, input2])
 
-            dense = Dense(units = 10, kernel_initializer = "he_normal", kernel_regularizer = l2(regularizer_rate),
+            dense = Dense(units = num_outputs, kernel_initializer = "he_normal", kernel_regularizer = l2(regularizer_rate),
                           activation = "softmax")(dense)
 
-            model2 = Model(inputs = (input, input2), outputs = dense)
+            model1 = Model(inputs = [input, input2], outputs = dense)
+
+            dense = Dense(units = 10, kernel_initializer = "he_normal", kernel_regularizer = l2(regularizer_rate),
+                          activation = "softmax")(flatten1)
+
+            model2 = Model(inputs = input, outputs = dense)
 
             return model1, model2
         else:
