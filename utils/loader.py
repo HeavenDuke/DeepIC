@@ -29,4 +29,4 @@ def construct_input_data(path, with_masks = True, with_label = True):
         return image_files, np.asarray(image_labels)
 
     else:
-        return image_ids, image_files, None
+        return image_ids, image_files
