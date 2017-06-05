@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 from keras.preprocessing.image import ImageDataGenerator
 
-from models.ResNet import ResnetBuilder
+from models.ResSppNet import ResnetBuilder
 from utils.loader import construct_input_data
 from utils.preprocessor import shuffle, extractSIFT
 from keras.optimizers import RMSprop
